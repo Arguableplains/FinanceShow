@@ -32,10 +32,11 @@ public class WebSecurityConfig {
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
-				.loginPage("/login")
+				.loginPage("/user/login")
+				.defaultSuccessUrl("/")
 				.permitAll()
 			)
-			.logout((logout) -> logout.permitAll());
+			.logout((logout) -> logout.logoutSuccessUrl("/user/login?logout").permitAll());
 
 		return http.build();
 	}

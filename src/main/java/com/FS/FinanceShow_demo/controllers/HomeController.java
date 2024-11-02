@@ -10,6 +10,11 @@ public class HomeController{
     public HomeController(){
     }
 
+    @GetMapping("/")
+    public String home(){
+        return "/free-pages/home";
+    }
+
     @GetMapping("/hello")
     public String hello(){
         return "/hello";

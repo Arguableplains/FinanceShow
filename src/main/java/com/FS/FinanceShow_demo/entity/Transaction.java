@@ -14,18 +14,21 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    public Transaction(double amount, Instant happenedOn, User user) {
+    public Transaction(double amount, LocalDateTime happenedOn, User user) {
         this.amount = amount;
         this.happenedOn = happenedOn;
         this.createdOn = Instant.now();
         this.user = user;
     }
-    
-    public Transaction() {}
+
+    public Transaction() {
+        this.createdOn = Instant.now(); 
+    }
     
     @Id
     @Column(name = "ID")
@@ -34,7 +37,8 @@ public class Transaction {
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
     @Column(name = "HAPPENED_ON", nullable = false)
-    private Instant happenedOn;
+    //private Instant happenedOn;
+    private LocalDateTime happenedOn;
     @Column(name = "CREATED_ON", nullable = false)
     private Instant createdOn;
     
@@ -42,6 +46,10 @@ public class Transaction {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     public User getUser() {
         return user;
     }
@@ -58,11 +66,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Instant getHappenedOn() {
+    public LocalDateTime getHappenedOn() {
         return happenedOn;
     }
 
-    public void setHappenedOn(Instant happenedOn) {
+    public void setHappenedOn(LocalDateTime happenedOn) {
         this.happenedOn = happenedOn;
     }
     

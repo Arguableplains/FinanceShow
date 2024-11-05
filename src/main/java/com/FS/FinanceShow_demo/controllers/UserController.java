@@ -1,7 +1,7 @@
 package com.FS.FinanceShow_demo.controllers;
 
 import com.FS.FinanceShow_demo.entity.User;
-import com.FS.FinanceShow_demo.service.UserService;
+import com.FS.FinanceShow_demo.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +50,8 @@ public class UserController {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.save(user);
-            return "redirect:/user/success";
+            //return "redirect:/user/success";
+            return "/user/login";
         } catch (Exception e) {
             model.addAttribute("registrationError", "An error occurred during registration");
             return "/user/registration";

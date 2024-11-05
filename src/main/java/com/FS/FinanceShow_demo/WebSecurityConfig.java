@@ -4,13 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
+import com.FS.FinanceShow_demo.entity.User;
+import com.FS.FinanceShow_demo.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,9 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig {
 
 	private final CustomUserDetailsService customUserDetailsService;
+	private final UserRepository userRepository;
 
-	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
+	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
         this.customUserDetailsService = customUserDetailsService;
+        this.userRepository = userRepository;
     }
 
 	@Bean

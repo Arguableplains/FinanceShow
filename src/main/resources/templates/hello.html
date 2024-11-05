@@ -9,5 +9,11 @@
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
+
+        <h3><span th:text="${#authentication.principal.id}">Usuário</span>!</h3>
+        <h3><span th:text="${#authentication.principal.name}">Usuário</span>!</h3>
+        <h3><span th:text="${#authentication.principal.password}">Usuário</span>!</h3>
+        <h3><span th:text="${#authentication.principal.enabled}">Usuário</span>!</h3>
+
     </body>
 </html>

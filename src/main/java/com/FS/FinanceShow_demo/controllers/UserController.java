@@ -10,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static java.lang.System.*;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {

@@ -1,4 +1,4 @@
-package com.FS.FinanceShow_demo.service;
+package com.FS.FinanceShow_demo.services;
 
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.repository.UserRepository;

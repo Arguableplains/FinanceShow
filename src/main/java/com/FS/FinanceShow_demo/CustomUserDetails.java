@@ -70,5 +70,9 @@ public class CustomUserDetails implements UserDetails {
     public String getPicture() {
         return user.getPicture();
     }
+    
+    public User getUser() {
+        return this.user;
+    }
 }
 

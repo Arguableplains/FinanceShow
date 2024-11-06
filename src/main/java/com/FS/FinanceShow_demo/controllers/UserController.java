@@ -1,9 +1,11 @@
 package com.FS.FinanceShow_demo.controllers;
 
+import com.FS.FinanceShow_demo.CustomUserDetails;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(Model model){
+    public String showLoginForm(Model model) {
         return "/user/login";
     }
 
@@ -62,24 +64,18 @@ public class UserController {
     }
 
     // Updating User
-    @GetMapping("/edit/{id}")
-    public String showUpdateUserForm(@PathVariable("id") long id, Model model) {
-        User user = userService.findById(id);
+    @GetMapping("/profile")
+    public String showUpdateUserForm(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user;
+        if (principal instanceof CustomUserDetails customUserDetails) {
+            user = customUserDetails.getUser();
+        } else {
+            return "redirect:/login";
+        }
 
         model.addAttribute("user", user);
         return "update-user";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Valid User user,
-    BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
-        }
-
-        userService.save(user);
-        return "redirect:/home";
     }
 
     // Deleting User
@@ -90,5 +86,26 @@ public class UserController {
         return "redirect:/home";
     }
 
-}
+    @PostMapping("/update/{id}")
+    public String updateUser(
+            @PathVariable("id") long id,
+            @Valid User user,
+            BindingResult result,
+            Model model) {
 
+        if (result.hasErrors()) {
+            user.setId(id);
+            return "update-user";
+        }
+
+        User existingUser = userService.findById(id);
+
+        if (!user.getPassword().equals(existingUser.getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userService.save(user);
+        return "redirect:/home";
+    }
+
+}

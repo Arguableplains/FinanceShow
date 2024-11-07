@@ -80,12 +80,12 @@ public class UserController {
   }
 
   // Deleting User
-  @GetMapping("/delete/{id}")
-  public String deleteUser(@PathVariable("id") long id, Model model) {
-    User user = userService.findById(id);
-    userService.delete(user);
-    return "redirect:/home";
-  }
+  // @GetMapping("/delete/{id}")
+  // public String deleteUser(@PathVariable("id") long id, Model model) {
+  // User user = userService.findById(id);
+  // userService.delete(user);
+  // return "redirect:/home";
+  // }
 
   @PostMapping("/update/{id}")
   public String updateUser(

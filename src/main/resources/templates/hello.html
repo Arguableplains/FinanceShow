@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <head>
-        <title>Hello World!</title>
-    </head>
-    <body>
-        <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name"></span>!</h1>
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        <div class="form-group" style="align-items: center;">
-            <a href="/transaction/registration" class="btn">Add transaction</a>
-        </div>
+<head>
+  <title>Hello World!</title>
+</head>
 
-        <h2>Your Transactions</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Amount</th>
-                    <th>Happened On</th>
-                    <th>Created On</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="transaction : ${transactions}">
-                    <td th:text="${transaction.id}">Transaction ID</td>
-                    <td th:text="${transaction.amount}">Amount</td>
-                    <td th:text="${transaction.happenedOn}">Happened On</td>
-                    <td th:text="${transaction.createdOn}">Created On</td>
-                    <td class="form-group">
-                        <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="btn">Edit</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+<body>
+  <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name"></span>!</h1>
+
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out" />
+  </form>
+  <a href="/user/profile">Update profile</a>
+  <div class="form-group" style="align-items: center;">
+    <a href="/transaction/registration" class="btn">Add transaction</a>
+  </div>
+  <h2>Your Transactions</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Amount</th>
+        <th>Happened On</th>
+        <th>Created On</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="transaction : ${transactions}">
+        <td th:text="${transaction.id}">Transaction ID</td>
+        <td th:text="${transaction.amount}">Amount</td>
+        <td th:text="${transaction.happenedOn}">Happened On</td>
+        <td th:text="${transaction.createdOn}">Created On</td>
+        <td class="form-group">
+          <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="btn">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
 </html>

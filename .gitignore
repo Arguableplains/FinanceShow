@@ -1,10 +1,19 @@
-HELP.md
+# Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Node
+node_modules/
+node/
+npm-debug.log
+package-lock.json
+
+# Tailwind CSS
+src/main/resources/static/css/output.css
+
+# IDE files - Spring Tool Suite/Eclipse
 .apt_generated
 .classpath
 .factorypath
@@ -13,22 +22,76 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IDE files - IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-data/
-
-### VS Code ###
+# IDE files - VS Code
 .vscode/
+*.code-workspace
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Application properties with sensitive data
+src/main/resources/application-prod.properties
+src/main/resources/application-prod.yml
+src/main/resources/application-staging.properties
+src/main/resources/application-staging.yml
+
+# Test coverage reports
+coverage/
+.coverage
+htmlcov/
+
+# Frontend build directories
+dist/
+build/
+.next/
+out/
+
+# H2 Database files
+*.mv.db
+*.db
+*.trace.db
+*.lock.db

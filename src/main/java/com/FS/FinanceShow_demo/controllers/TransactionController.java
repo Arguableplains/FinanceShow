@@ -71,7 +71,7 @@ public class TransactionController {
         Transaction transaction = transactionService.findById(id);
         if (transaction == null) {
             model.addAttribute("error", "Transaction not found");
-            return "redirect:/transaction/list";
+            return "redirect:/hello";
         }
         model.addAttribute("transaction", transaction);
         return "/transaction/edit";
@@ -91,7 +91,7 @@ public class TransactionController {
 
         try {
             transactionService.save(transaction);
-            return "redirect:/transaction/list";
+            return "redirect:/hello";
         } catch (Exception e) {
             model.addAttribute("updateError", "An error occurred during update");
             return "/transaction/edit";

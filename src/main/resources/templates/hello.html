@@ -16,7 +16,6 @@
   <div class="form-group" style="align-items: center;">
     <a href="/transaction/registration" class="btn">Add transaction</a>
   </div>
-
   <h2>Your Transactions</h2>
   <table border="1">
     <thead>
@@ -33,6 +32,9 @@
         <td th:text="${transaction.amount}">Amount</td>
         <td th:text="${transaction.happenedOn}">Happened On</td>
         <td th:text="${transaction.createdOn}">Created On</td>
+        <td class="form-group">
+          <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="btn">Edit</a>
+        </td>
       </tr>
     </tbody>
   </table>

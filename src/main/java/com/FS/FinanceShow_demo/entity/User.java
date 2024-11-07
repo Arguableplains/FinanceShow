@@ -1,30 +1,46 @@
 package com.FS.FinanceShow_demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "NAME", nullable = false)
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
     @Column(name = "EMAIL", nullable = false, unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "PASSWORD", nullable = false)
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
     @Column(name = "CELLPHONE", nullable = false, unique = true)
+    @NotBlank(message = "Cellphone is required")
+    @Pattern(regexp = "\\+?\\d{10,15}", message = "Cellphone should be a valid number with 10 to 15 digits, optionally prefixed by '+'")
     private String cellphone;
 
     @Column(name = "PICTURE")
+    @Pattern(
+    regexp = "^data:image/(jpeg|png|gif|bmp|webp);base64,[A-Za-z0-9+/=]+$",
+    message = "Picture must be a valid base64-encoded image in JPEG, PNG, GIF, BMP, or WEBP format"
+)
     private String picture;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -33,7 +49,8 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;  // Permissões (papéis de usuário)
+    @NotEmpty(message = "User must have at least one role")
+    private Set<Role> roles;
 
     // Construtor sem parâmetros (obrigatório para JPA)
     public User() {}

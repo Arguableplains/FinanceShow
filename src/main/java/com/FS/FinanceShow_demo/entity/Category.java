@@ -14,6 +14,10 @@ public class Category{
     @Column(name= "NAME", nullable = false, unique = true)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "USER_FOREING_KEY", nullable = false)
+    private User user;
+
     public Category(){}
 
     public Category(Long id, String name){
@@ -35,6 +39,14 @@ public class Category{
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

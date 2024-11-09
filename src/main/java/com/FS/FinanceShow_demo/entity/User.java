@@ -52,10 +52,9 @@ public class User {
     @NotEmpty(message = "User must have at least one role")
     private Set<Role> roles;
 
-    // Construtor sem parâmetros (obrigatório para JPA)
+    // Constructor
     public User() {}
 
-    // Construtor com parâmetros
     public User(String name, String email, String password, String cellphone, String picture, Set<Role> roles) {
         this.name = name;
         this.email = email;

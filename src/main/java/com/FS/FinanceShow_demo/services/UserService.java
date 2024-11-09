@@ -31,4 +31,8 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
     }
 
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Invalid user email:" + email));
+    }
+
 }

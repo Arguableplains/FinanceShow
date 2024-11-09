@@ -26,6 +26,10 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
+    public List<Category> findByUserId(Long userId) {
+        return categoryRepository.findByUser_Id(userId);
+    }
+
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }

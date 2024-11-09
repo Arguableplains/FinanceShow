@@ -15,6 +15,7 @@
             <input type="text" id="name" name="name" th:field="*{name}" required>
             <!-- Validation error message -->
             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+            <input th:value="${category.user}" th:field="*{user}" hidden>
         </div>
         <br>
         <button type="submit">Save</button>

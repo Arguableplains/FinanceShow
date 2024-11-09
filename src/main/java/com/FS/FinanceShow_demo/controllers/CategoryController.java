@@ -2,6 +2,10 @@ package com.FS.FinanceShow_demo.controllers;
 
 import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.services.CategoryService;
+import com.FS.FinanceShow_demo.entity.User;
+import com.FS.FinanceShow_demo.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +22,21 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserService userService;
 
     // Show category registration form
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userService.findByEmail(email);
+
         Category category = new Category();
+        category.setUser(user);
+
         model.addAttribute("category", category);
         return "/category/registration";
     }
@@ -38,7 +52,8 @@ public class CategoryController {
             return "/category/registration";
         }
 
-        try {
+        try
+            {
             categoryService.save(category);
             return "redirect:/category/list";
         } catch (Exception e) {
@@ -50,7 +65,13 @@ public class CategoryController {
     // List all categories
     @GetMapping("/list")
     public String listCategories(Model model) {
-        List<Category> categories = categoryService.findAll();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userService.findByEmail(email);
+
+        List<Category> categories = categoryService.findByUserId(user.getId());
         model.addAttribute("categories", categories);
         return "/category/category-index";
     }

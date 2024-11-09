@@ -5,7 +5,9 @@ import com.FS.FinanceShow_demo.entity.Transaction;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.TransactionService;
 import jakarta.validation.Valid;
-import java.util.List;
+
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,10 @@ public class TransactionController {
             BindingResult bindingResult,
             Model model,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-
+        
+        if (transaction.getAmount() == 0) {
+            bindingResult.rejectValue("amount", "error.transaction", "Invalid Amount");
+        }
         if (bindingResult.hasErrors()) {
             return "/transaction/registration";
         }
@@ -55,25 +60,22 @@ public class TransactionController {
             return "/transaction/registration";
         }
     }
-
-    
-    // List all transactions
-    @GetMapping("/list")
-    public String listTransactions(Model model) {
-        List<Transaction> transactions = transactionService.findAll();
-        model.addAttribute("transactions", transactions);
-        return "/transaction/list";
-    }
     
     // Edit transaction
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
+    public String showEditForm(
+        @PathVariable("id") Long id, 
+        Model model) {
         Transaction transaction = transactionService.findById(id);
         if (transaction == null) {
             model.addAttribute("error", "Transaction not found");
             return "redirect:/hello";
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String formattedHappenedOn = transaction.getHappenedOn().format(formatter);
+
         model.addAttribute("transaction", transaction);
+        model.addAttribute("formattedHappenedOn", formattedHappenedOn);
         return "/transaction/edit";
     }
     
@@ -88,25 +90,28 @@ public class TransactionController {
         if (bindingResult.hasErrors()) {
             return "/transaction/edit";
         }
-
+        
         try {
             transactionService.save(transaction);
             return "redirect:/hello";
         } catch (Exception e) {
-            model.addAttribute("updateError", "An error occurred during update");
+            model.addAttribute("error", "An error occurred during update");
+            System.out.println(e.getMessage());
             return "/transaction/edit";
         }
     }
     
     // Delete transaction
     @GetMapping("/delete/{id}")
-    public String deleteTransaction(@PathVariable("id") Long id, Model model) {
+    public String deleteTransaction(
+        @PathVariable("id") Long id, 
+        Model model) {
         try {
             transactionService.deleteById(id);
-            return "redirect:/transaction/list";
+            return "redirect:/hello";
         } catch (Exception e) {
-            model.addAttribute("deleteError", "An error occurred during deletion");
-            return "redirect:/transaction/list";
+            model.addAttribute("error", "An error occurred during deletion");
+            return "redirect:/hello";
         }
     }
 }

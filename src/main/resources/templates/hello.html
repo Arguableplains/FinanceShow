@@ -22,18 +22,22 @@
       <tr>
         <th>Transaction ID</th>
         <th>Amount</th>
+        <th>Category</th>
         <th>Happened On</th>
         <th>Created On</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr th:each="transaction : ${transactions}">
         <td th:text="${transaction.id}">Transaction ID</td>
         <td th:text="${transaction.amount}">Amount</td>
+        <td th:text="${transaction.category}">Category</td>
         <td th:text="${transaction.happenedOn}">Happened On</td>
         <td th:text="${transaction.createdOn}">Created On</td>
         <td class="form-group">
           <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="btn">Edit</a>
+          <a th:href="@{/transaction/delete/{id}(id=${transaction.id})}" class="btn">Delete</a>
         </td>
       </tr>
     </tbody>

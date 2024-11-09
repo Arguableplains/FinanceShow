@@ -6,17 +6,21 @@
         <link href="/css/standard.css" rel="stylesheet"/>
     </head>
     <body>
-        <div th:if="${registrationError}" style="color: red;">
-            <p th:text="${registrationError}"></p>
-        </div>
+        <h2>Transaction Registration</h2>
+        <form th:action="@{/transaction/save}" th:object="${transaction}" th:method="post">
 
-        <form th:action="@{/transaction/save}" th:object="${transaction}" method="POST">
-            
             <!-- Transaction Amount -->
             <div>
                 <label th:text="#{label.transaction.amount}">Amount</label>
                 <input type="number" step="0.01" th:field="*{amount}" required/>
-                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}">Validation error</p>
+                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" style="color: red;">Validation error</p>
+            </div>
+            
+            <!-- Transaction Category -->
+            <div>
+                <label th:text="#{label.transaction.category}">Category</label>
+                <input th:field="*{category}" required/>
+                <p th:each="error : ${#fields.errors('category')}" th:text="${error}" style="color: red;">Validation error</p>
             </div>
             
             <!-- Transaction Happened On (Date Picker) -->
@@ -28,5 +32,10 @@
 
             <button type="submit" th:text="#{label.form.submit}">Submit</button>
         </form>
+        <a th:href="@{/hello}">Cancel</a>
+
+        <div th:if="${registrationError}" style="color: red;">
+            <p th:text="${registrationError}"></p>
+        </div>
     </body>
 </html>

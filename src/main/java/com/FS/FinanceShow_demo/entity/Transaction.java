@@ -16,6 +16,9 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -36,8 +39,10 @@ public class Transaction {
     private Long id;
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
+    @Column(name = "CATEGORY", nullable = false)
+    private String category;
     @Column(name = "HAPPENED_ON", nullable = false)
-    //private Instant happenedOn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime happenedOn;
     @Column(name = "CREATED_ON", nullable = false)
     private Instant createdOn;
@@ -56,6 +61,18 @@ public class Transaction {
     
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public double getAmount() {

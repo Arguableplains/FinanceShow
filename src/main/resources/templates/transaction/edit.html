@@ -6,28 +6,36 @@
         <link href="/css/standard.css" rel="stylesheet"/>
     </head>
     <body>
-        <div th:if="${registrationError}" style="color: red;">
-            <p th:text="${registrationError}"></p>
-        </div>
-
-        <form th:action="@{/transaction/save}" th:object="${transaction}" method="POST">
-            <input type="hidden" th:field="*{id}" />
-            
+        <h2>Edit Transaction</h2>
+        <form th:action="@{/transaction/update/{id}(id=${transaction.id})}" th:object="${transaction}" th:method="post">
+            <input type="hidden" th:field="*{user.id}"></input>
             <!-- Transaction Amount -->
             <div>
                 <label th:text="#{label.transaction.amount}">Amount</label>
                 <input type="number" step="0.01" th:field="*{amount}" required/>
-                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}">Validation error</p>
+                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" style="color: red;">Validation error</p>
+            </div>
+            
+            <!-- Transaction Category -->
+            <div>
+                <label th:text="#{label.transaction.category}">Category</label>
+                <input th:field="*{category}" required/>
+                <p th:each="error : ${#fields.errors('category')}" th:text="${error}" style="color: red;">Validation error</p>
             </div>
             
             <!-- Transaction Happened On (Date Picker) -->
             <div>
                 <label th:text="#{label.transaction.happenedOn}">Happened On</label>
-                <input type="datetime-local" th:field="*{happenedOn}" required/>
+                <input type="datetime-local" th:field="*{happenedOn}" th:value="${formattedHappenedOn}" required/>
                 <p th:each="error : ${#fields.errors('happenedOn')}" th:text="${error}">Validation error</p>
             </div>
 
             <button type="submit" th:text="#{label.form.submit}">Submit</button>
         </form>
+        <a th:href="@{/hello}">Cancel</a>
+        
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
     </body>
 </html>

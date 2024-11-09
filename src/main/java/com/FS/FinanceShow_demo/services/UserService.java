@@ -4,9 +4,7 @@ import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static java.lang.System.*;
 
-import java.util.Optional;
 
 @Service
 public class UserService {

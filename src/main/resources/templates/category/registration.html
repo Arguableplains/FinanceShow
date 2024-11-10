@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Registration</title>
+</head>
+<body>
+    <h1>Register a New Category</h1>
+
+    <!-- Form for adding a new category -->
+    <form th:action="@{/category/save}" th:object="${category}" method="post">
+        <div>
+            <label for="name">Category Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" required>
+            <!-- Validation error message -->
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+            <input th:value="${category.user}" th:field="*{user}" hidden>
+        </div>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- Display any registration error -->
+    <div th:if="${registrationError}" style="color: red;">
+        <p th:text="${registrationError}"></p>
+    </div>
+
+    <br>
+    <a href="/category/list">Back to Category List</a>
+</body>
+</html>

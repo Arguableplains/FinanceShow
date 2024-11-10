@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "users")
@@ -50,7 +51,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @NotEmpty(message = "User must have at least one role")
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();;
 
     // Constructor
     public User() {}
@@ -114,6 +115,11 @@ public class User {
     }
 
     public Set<Role> getRoles() {
+
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+
         return roles;
     }
 

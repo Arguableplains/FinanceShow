@@ -37,7 +37,7 @@ public class TransactionService {
 
     public Transaction findById(Long id) {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
-        return optionalTransaction.orElse(null); // Return null if not found
+        return optionalTransaction.orElse(null);
     }
 
     public void deleteById(Long id) {

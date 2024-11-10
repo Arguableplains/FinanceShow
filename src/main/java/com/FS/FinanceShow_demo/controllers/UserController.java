@@ -2,10 +2,13 @@ package com.FS.FinanceShow_demo.controllers;
 
 import com.FS.FinanceShow_demo.CustomUserDetails;
 import com.FS.FinanceShow_demo.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import com.FS.FinanceShow_demo.services.UserService;
+import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,12 +21,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserController {
 
   private final UserService userService;
+  private final CustomUserDetailsService userDetailsService;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+  public UserController(UserService userService, PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService) {
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
+    this.userDetailsService = userDetailsService;
   }
 
   @GetMapping("/login")
@@ -107,6 +112,17 @@ public class UserController {
     }
 
     userService.save(user);
+
+    // New Authentication
+    UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
+
+    UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(
+        updatedUserDetails,
+        updatedUserDetails.getPassword(),
+        updatedUserDetails.getAuthorities()
+    );
+
+    SecurityContextHolder.getContext().setAuthentication(newAuth);
 
     redirectAttributes.addFlashAttribute("successMessage", true);
     return "redirect:/user/profile";

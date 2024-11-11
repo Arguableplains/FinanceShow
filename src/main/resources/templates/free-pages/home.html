@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <title>Finance Show</title>
-    </head>
-    <body>
-        <h1>Welcome!</h1>
-        <br>
-        <h2>Esta é a página principal do Finance Show</h2>
 
-        <p>Click <a href="/hello">here</a> to see a greeting.</p>
-    </body>
+<head>
+  <title>Finance Show</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+
+<body class="min-h-screen bg-[#D7ECCD] flex flex-col justify-center items-center p-4">
+
+  <div class="w-full max-w-md p-6 bg-white rounded-xl shadow-lg text-center">
+    <h1 class="text-3xl font-bold mb-4">Bem Vindo(a)!</h1>
+
+    <h2 class="text-xl font-medium mb-4">Esta é a página inicial do Finance Show</h2>
+
+    <p class="text-lg">
+      Clique
+      <a href="/hello" class="text-blue-600 font-medium hover:underline">
+        aqui
+      </a>
+      para prosseguir.
+    </p>
+  </div>
+
+</body>
+
 </html>

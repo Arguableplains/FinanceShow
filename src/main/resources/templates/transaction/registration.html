@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <title>Transaction Registration</title>
-        <link href="/css/standard.css" rel="stylesheet"/>
-    </head>
-    <body>
-        <h2>Transaction Registration</h2>
-        <form th:action="@{/transaction/save}" th:object="${transaction}" th:method="post">
 
-            <!-- Transaction Amount -->
-            <div>
-                <label th:text="#{label.transaction.amount}">Amount</label>
-                <input type="number" step="0.01" th:field="*{amount}" required/>
-                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" style="color: red;">Validation error</p>
-            </div>
-            
-            <!-- Transaction Category -->
-            <div>
-                <label th:text="#{label.transaction.category}">Category</label>
-                <input th:field="*{category}" required/>
-                <p th:each="error : ${#fields.errors('category')}" th:text="${error}" style="color: red;">Validation error</p>
-            </div>
-            
-            <!-- Transaction Happened On (Date Picker) -->
-            <div>
-                <label th:text="#{label.transaction.happenedOn}">Happened On</label>
-                <input type="datetime-local" th:field="*{happenedOn}" required/>
-                <p th:each="error : ${#fields.errors('happenedOn')}" th:text="${error}">Validation error</p>
-            </div>
+<head>
+  <meta charset="utf-8">
+  <title>Registro de Transação</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
 
-            <button type="submit" th:text="#{label.form.submit}">Submit</button>
-        </form>
-        <a th:href="@{/hello}">Cancel</a>
+<body class="flex min-h-screen bg-[#D7ECCD]">
 
-        <div th:if="${registrationError}" style="color: red;">
-            <p th:text="${registrationError}"></p>
-        </div>
-    </body>
+  <div th:insert="fragments/sidebar :: sidebarFragment"></div>
+
+  <main class="flex-1 flex flex-col justify-center items-center p-6">
+    <h2 class="text-2xl font-bold mb-4">Registro de Transação</h2>
+    <form th:action="@{/transaction/save}" th:method="post" th:object="${transaction}"
+      class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
+      <div>
+        <label th:text="#{label.transaction.amount}" class="block font-medium mb-1">Montante</label>
+        <input type="number" step="0.01" th:field="*{amount}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+        <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" class="text-red-600">Validation error</p>
+      </div>
+      <div>
+        <label th:text="#{label.transaction.category}" class="block font-medium mb-1">Categoria</label>
+        <input th:field="*{category}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+        <p th:each="error : ${#fields.errors('category')}" th:text="${error}" class="text-red-600">Validation error</p>
+      </div>
+      <div>
+        <label th:text="#{label.transaction.happenedOn}" class="block font-medium mb-1">Data</label>
+        <input type="datetime-local" th:field="*{happenedOn}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+        <p th:each="error : ${#fields.errors('happenedOn')}" th:text="${error}" class="text-red-600">Validation error
+        </p>
+      </div>
+      <div class="flex justify-between items-center mt-4">
+        <a th:href="@{/hello}" class="text-blue-600 hover:underline">Cancelar</a>
+        <button type="submit" th:text="#{label.form.submit}"
+          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <div th:if="${registrationError}" class="mt-4 text-red-600">
+      <p th:text="${registrationError}"></p>
+    </div>
+  </main>
+
+</body>
+
 </html>

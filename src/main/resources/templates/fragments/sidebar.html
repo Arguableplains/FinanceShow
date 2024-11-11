@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+
+<body>
+  <aside th:fragment="sidebarFragment" class="w-64 bg-white p-6 shadow-lg min-h-screen flex flex-col justify-between">
+    <div>
+      <div class="mb-8">
+        <img src="/images/logo.svg" alt="Logo" class="w-20 h-20 mx-auto mb-4">
+      </div>
+      <nav class="flex flex-col space-y-4">
+        <a href="/hello"
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">Página
+          Inicial</a>
+        <a href="/user/profile"
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">Atualizar
+          Perfil</a>
+        <a href="/transaction/registration"
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">Adicionar
+          Transação</a>
+        <a href="/category/list"
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">Gerenciar
+          Categorias</a>
+      </nav>
+    </div>
+    <form th:action="@{/logout}" method="post">
+      <button type="submit"
+        class="w-full py-2 px-4 bg-red-500 rounded-lg text-white font-medium hover:bg-red-700 transition duration-150">Sair</button>
+    </form>
+  </aside>
+</body>
+
+</html>

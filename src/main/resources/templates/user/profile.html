@@ -2,35 +2,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <title>Edit Profile</title>
+  <title>Editar Perfil</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
 </head>
 
-<body>
-  <h2>Edit Profile</h2>
-  <form th:action="@{/user/update/{id}(id=${user.id})}" th:method="post" th:object="${user}">
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" th:field="*{name}" required />
+<body class="flex min-h-screen bg-[#D7ECCD]">
+
+  <div th:insert="fragments/sidebar :: sidebarFragment"></div>
+
+  <main class="flex-1 flex flex-col justify-center items-center p-6">
+    <h2 class="text-2xl font-bold mb-4">Editar Perfil</h2>
+    <form th:action="@{/user/update/{id}(id=${user.id})}" th:method="post" th:object="${user}"
+      class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
+      <div>
+        <label for="name" class="block font-medium mb-1">Nome:</label>
+        <input type="text" th:field="*{name}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+      </div>
+      <div>
+        <label for="email" class="block font-medium mb-1">Email:</label>
+        <input type="email" th:field="*{email}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+      </div>
+      <div>
+        <label for="cellphone" class="block font-medium mb-1">Celular:</label>
+        <input type="tel" th:field="*{cellphone}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+      </div>
+      <div>
+        <label for="password" class="block font-medium mb-1">Senha:</label>
+        <input type="password" th:field="*{password}" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+      </div>
+      <div class="flex justify-between items-center mt-4">
+        <a th:href="@{/hello}" class="text-blue-600 hover:underline">Cancelar</a>
+        <button type="submit"
+          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">
+          Atualizar
+        </button>
+      </div>
+    </form>
+
+    <div th:if="${successMessage}" role="alert" class="mt-4">
+      <span class="text-green-600">Perfil atualizado com sucesso!</span>
     </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" th:field="*{email}" required />
-    </div>
-    <div>
-      <label for="cellphone">Cellphone:</label>
-      <input type="tel" th:field="*{cellphone}" required />
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" th:field="*{password}" required />
-    </div>
-    <button type="submit">Update</button>
-  </form>
-  <!-- Display the success message if it exists -->
-  <div th:if="${successMessage}" role="alert">
-    <span style="color: green;">Perfil atualizado com sucesso!</span>
-  </div>
-  <a th:href="@{/hello}">Cancel</a>
+  </main>
+
 </body>
 
 </html>

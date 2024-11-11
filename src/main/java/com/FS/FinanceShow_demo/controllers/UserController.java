@@ -87,13 +87,13 @@ public class UserController {
 
   @GetMapping("/delete")
   public String deleteUser(Model model,
-  @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-  User user = (User) customUserDetails.getUser();
-  userService.delete(user);
+    @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    User user = (User) customUserDetails.getUser();
+    userService.delete(user);
 
-  SecurityContextHolder.clearContext();
+    SecurityContextHolder.clearContext();
 
-  return "redirect:/user/login";
+    return "redirect:/user/login";
   }
 
   @PostMapping("/update/{id}")

@@ -15,10 +15,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -40,8 +41,10 @@ public class Transaction {
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
 
-    @Column(name = "CATEGORY", nullable = false)
-    private String category;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    private Category category;
 
     @Column(name = "HAPPENED_ON", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -50,6 +53,7 @@ public class Transaction {
     private Instant createdOn;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
@@ -69,11 +73,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

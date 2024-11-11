@@ -62,7 +62,7 @@
           <tr th:each="transaction : ${transactions}" class="border-b">
             <td th:text="${transaction.id}" class="py-2 px-4">Transaction ID</td>
             <td th:text="${transaction.amount}" class="py-2 px-4">Amount</td>
-            <td th:text="${transaction.category}" class="py-2 px-4">Category</td>
+            <td th:text="${transaction.category.name}" class="py-2 px-4">Category</td>
             <td th:text="${transaction.happenedOn}" class="py-2 px-4">Happened On</td>
             <td th:text="${transaction.createdOn}" class="py-2 px-4">Created On</td>
             <td class="py-2 px-4">

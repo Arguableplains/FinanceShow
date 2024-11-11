@@ -1,6 +1,8 @@
 package com.FS.FinanceShow_demo.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "category")
@@ -11,10 +13,11 @@ public class Category{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name= "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "USER_FOREING_KEY", nullable = false)
     private User user;
 

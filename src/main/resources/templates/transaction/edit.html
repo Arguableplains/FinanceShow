@@ -35,8 +35,15 @@
                     th:text="${category.name}">Category Option</option>
         </select>
         <div th:if="${noCategoriesFound}" role="alert">
-            <span th:text="${noCategoriesFound}"></span>
-            <a class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" href="/category/registration">Adicionar Nova Categoria</a>
+          <span
+              th:text="${noCategoriesFound}"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+          ></span>
+          <a
+            class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" href="/category/registration"
+          >
+              Adicionar Nova Categoria
+          </a>
         </div>
       </div>
 

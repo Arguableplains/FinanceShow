@@ -42,8 +42,8 @@ public class Transaction {
     private double amount;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "CATEGORY_ID", nullable = true)
     private Category category;
 
     @Column(name = "HAPPENED_ON", nullable = false)

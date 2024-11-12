@@ -1,46 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
-<<<<<<< HEAD
 <head>
   <meta charset="utf-8">
   <title>Registro de Transação</title>
   <link rel="stylesheet" th:href="@{/css/output.css}">
 </head>
-=======
-            <!-- Transaction Amount -->
-            <div>
-                <label th:text="#{label.transaction.amount}">Amount</label>
-                <input type="number" step="0.01" th:field="*{amount}" required/>
-                <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" style="color: red;">Validation error</p>
-            </div>
-            
-
-            <!-- Transaction Category -->
-            <div>
-                <label th:text="#{label.transaction.category}">Category</label>
-                <select th:field="*{category}" required>
-                    <option value="" disabled selected th:text="#{label.select.category}">Select a Category</option>
-                    <option th:each="category : ${categories}"
-                            th:value="${category.id}"
-                            th:text="${category.name}">Category Option</option>
-                </select>
-                <p th:each="error : ${#fields.errors('category')}" th:text="${error}" style="color: red;">Validation error</p>
-
-                <div th:if="${noCategoriesFound}" role="alert">
-                    <span th:text="${noCategoriesFound}"></span>
-                    <a href="/category/registration">Add New Category</a>
-                </div>
-            </div>
-
-            
-            <!-- Transaction Happened On (Date Picker) -->
-            <div>
-                <label th:text="#{label.transaction.happenedOn}">Happened On</label>
-                <input type="datetime-local" th:field="*{happenedOn}" required/>
-                <p th:each="error : ${#fields.errors('happenedOn')}" th:text="${error}">Validation error</p>
-            </div>
->>>>>>> 3b6646c (Add Transaction's category related to the User's categories - Post Rebase Process)
 
 <body class="flex min-h-screen bg-[#D7ECCD]">
 
@@ -56,7 +21,7 @@
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" class="text-red-600">Validation error</p>
       </div>
-      <div>
+      <div class="flex-col">
         <label th:text="#{label.transaction.category}" class="block font-medium mb-1">Categoria</label>
         <select th:field="*{category}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
           <option value="" disabled selected th:text="#{label.select.category}">Categoria</option>
@@ -66,8 +31,15 @@
         </select>
         <p th:each="error : ${#fields.errors('category')}" th:text="${error}" class="text-red-600">Validation error</p>
         <div th:if="${noCategoriesFound}" role="alert">
-            <span th:text="${noCategoriesFound}"></span>
-            <a class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" href="/category/registration">Adicionar Nova Categoria</a>
+          <span
+              th:text="${noCategoriesFound}"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+          ></span>
+          <a
+            class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" href="/category/registration"
+          >
+              Adicionar Nova Categoria
+          </a>
         </div>
       </div>
       <div>

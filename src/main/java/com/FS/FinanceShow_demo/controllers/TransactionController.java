@@ -42,7 +42,7 @@ public class TransactionController {
         List<Category> categories = categoryService.findByUserId(user.getId());
 
         if(categories.isEmpty()){
-            model.addAttribute("noCategoriesFound", "You don't have any categories registred yet! You should create one before creating transactions!");
+            model.addAttribute("noCategoriesFound", "Você ainda não tem categorias registradas!!! Você deveria registrar categorias para que as suas transações fiquem melhor organizadas!");
         }
 
         model.addAttribute("categories", categories);
@@ -99,8 +99,14 @@ public class TransactionController {
         String formattedHappenedOn = transaction.getHappenedOn().format(formatter);
         List<Category> categories = categoryService.findByUserId(((User)customUserDetails.getUser()).getId());
 
+        if(categories.isEmpty()){
+            model.addAttribute("noCategoriesFound", "Você ainda não tem categorias registradas!!! Você deveria registrar categorias para que as suas transações fiquem melhor organizadas!");
+        }
+        else{
+            model.addAttribute("categories", categories);
+        }
+
         model.addAttribute("transaction", transaction);
-        model.addAttribute("categories", categories);
         model.addAttribute("formattedHappenedOn", formattedHappenedOn);
         return "/transaction/edit";
     }

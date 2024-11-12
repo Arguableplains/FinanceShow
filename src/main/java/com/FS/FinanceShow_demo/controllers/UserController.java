@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Controller
 @RequestMapping("/user")
@@ -84,13 +85,16 @@ public class UserController {
     return "user/profile";
   }
 
-  // Deleting User
-  // @GetMapping("/delete/{id}")
-  // public String deleteUser(@PathVariable("id") long id, Model model) {
-  // User user = userService.findById(id);
-  // userService.delete(user);
-  // return "redirect:/home";
-  // }
+  @GetMapping("/delete/")
+  public String deleteUser(Model model,
+  @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+  User user = (User) customUserDetails.getUser();
+  userService.delete(user);
+
+  SecurityContextHolder.clearContext();
+
+  return "redirect:/user/login";
+  }
 
   @PostMapping("/update/{id}")
   public String updateUser(

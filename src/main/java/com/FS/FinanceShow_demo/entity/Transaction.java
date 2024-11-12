@@ -39,8 +39,11 @@ public class Transaction {
     private Long id;
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
-    @Column(name = "CATEGORY", nullable = false)
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY", nullable = false)
     private String category;
+
     @Column(name = "HAPPENED_ON", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime happenedOn;

@@ -85,7 +85,7 @@ public class UserController {
     return "user/profile";
   }
 
-  @GetMapping("/delete/")
+  @GetMapping("/delete")
   public String deleteUser(Model model,
   @AuthenticationPrincipal CustomUserDetails customUserDetails) {
   User user = (User) customUserDetails.getUser();

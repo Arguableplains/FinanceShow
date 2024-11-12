@@ -40,8 +40,7 @@ public class Transaction {
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
 
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY", nullable = false)
+    @Column(name = "CATEGORY", nullable = false)
     private String category;
 
     @Column(name = "HAPPENED_ON", nullable = false)

@@ -26,10 +26,13 @@
           Categorias</a>
       </nav>
     </div>
-    <form th:action="@{/logout}" method="post">
-      <button type="submit"
-        class="w-full py-2 px-4 bg-red-500 rounded-lg text-white font-medium hover:bg-red-700 transition duration-150">Sair</button>
-    </form>
+    <div class="text-center flex flex-col space-y-4">
+      <form th:action="@{/logout}" method="post">
+        <button type="submit"
+          class="w-full py-2 px-4 bg-red-500 rounded-lg text-white font-medium hover:bg-red-700 transition duration-150">Sair</button>
+      </form>
+      <a href="/user/delete" class="text-red-500">Deletar Conta</a>
+    </div>
   </aside>
 </body>
 

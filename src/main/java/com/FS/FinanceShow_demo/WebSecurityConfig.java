@@ -1,27 +1,23 @@
- package com.FS.FinanceShow_demo;
+package com.FS.FinanceShow_demo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
-import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
-import com.FS.FinanceShow_demo.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
 	private final CustomUserDetailsService customUserDetailsService;
-	private final UserRepository userRepository;
 
-	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.userRepository = userRepository;
-    }
+	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
+		this.customUserDetailsService = customUserDetailsService;
+	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,16 +31,23 @@ public class WebSecurityConfig {
 				.defaultSuccessUrl("/")
 				.permitAll()
 			)
-			.logout((logout) -> logout.logoutSuccessUrl("/user/login?logout").permitAll());
+			.logout((logout) -> logout
+				.logoutSuccessUrl("/user/login?logout")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.permitAll()
+			)
+			.sessionManagement((session) -> session
+				.sessionFixation().migrateSession()
+				.maximumSessions(1).expiredUrl("/user/login?expired")
+			);
 
 		return http.build();
 	}
 
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(12); // Increased strength for added security
+	}
 
 }
-
-

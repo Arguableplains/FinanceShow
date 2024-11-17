@@ -41,7 +41,7 @@ public class Transaction {
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "CATEGORY_ID", nullable = true)
     private Category category;
@@ -52,10 +52,15 @@ public class Transaction {
     @Column(name = "CREATED_ON", nullable = false)
     private Instant createdOn;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "ACCOUNT_ID", nullable = true)
+    private Account account;
 
     public void setUser(User user) {
         this.user = user;
@@ -79,6 +84,14 @@ public class Transaction {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public double getAmount() {

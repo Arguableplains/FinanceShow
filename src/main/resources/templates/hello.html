@@ -17,6 +17,14 @@
 
     <div class="flex flex-row justify-between mb-4 items-center">
       <h2 class="text-xl font-semibold">Suas Transações</h2>
+
+      <select onchange="accountChange(this);" th:object="${accounts}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
+          <option th:value="0" selected>Todas as Contas</option>
+          <option th:each="account : ${accounts}"
+                  th:value="${account.id}"
+                  th:text="${account.name}">Conta</option>
+      </select>
+
       <a href="/transaction/registration"
         class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150">
         Adicionar Nova Transação
@@ -27,7 +35,7 @@
       <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead>
           <tr class="bg-gray-100 border-b">
-            <th class="py-2 px-4 text-left">ID da Transação</th>
+            <th class="py-2 px-4 text-left">Grupo de Transação</th>
             <th class="py-2 px-4 text-left">Montante</th>
             <th class="py-2 px-4 text-left">Categoria</th>
             <th class="py-2 px-4 text-left">Data</th>
@@ -37,7 +45,7 @@
         </thead>
         <tbody>
           <tr th:each="transaction : ${transactions}" class="border-b">
-            <td th:text="${transaction.id}" class="py-2 px-4">Transaction ID</td>
+            <td th:text="${transaction?.account?.name}" class="py-2 px-4">Account</td>
             <td th:text="${transaction.amount}" class="py-2 px-4">Amount</td>
             <td th:text="${transaction?.category?.name}" class="py-2 px-4">Category</td>
             <td th:text="${transaction.happenedOn}" class="py-2 px-4">Happened On</td>
@@ -55,5 +63,7 @@
   </main>
 
 </body>
+
+<script src="/js/hello.js"></script>
 
 </html>

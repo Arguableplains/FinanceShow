@@ -12,6 +12,7 @@ import java.util.HashSet;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +42,7 @@ public class User {
     @Pattern(
     regexp = "^data:image/(jpeg|png|gif|bmp|webp);base64,[A-Za-z0-9+/=]+$",
     message = "Picture must be a valid base64-encoded image in JPEG, PNG, GIF, BMP, or WEBP format"
-)
+    )
     private String picture;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -51,7 +52,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @NotEmpty(message = "User must have at least one role")
-    private Set<Role> roles = new HashSet<>();;
+    private Set<Role> roles = new HashSet<>();
 
     // Constructor
     public User() {}

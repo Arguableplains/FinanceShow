@@ -4,19 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	private final CustomUserDetailsService customUserDetailsService;
-
-	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
-		this.customUserDetailsService = customUserDetailsService;
+	public WebSecurityConfig() {
 	}
 
 	@Bean
@@ -40,7 +37,8 @@ public class WebSecurityConfig {
 			.sessionManagement((session) -> session
 				.sessionFixation().migrateSession()
 				.maximumSessions(1).expiredUrl("/user/login?expired")
-			);
+			)
+			.csrf(AbstractHttpConfigurer::disable);
 
 		return http.build();
 	}

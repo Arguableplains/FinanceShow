@@ -1,15 +1,15 @@
 package com.FS.FinanceShow_demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "category")
-public class Category{
+@Table(name = "account")
+public class Account{
 
     @Id
     @Column(name = "ID")
@@ -28,9 +28,9 @@ public class Category{
     private User user;
 
 
-    public Category(){}
+    public Account(){}
 
-    public Category(Long id, String name){
+    public Account(Long id, String name){
         this.id = id;
         this.name = name;
     }

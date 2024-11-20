@@ -60,4 +60,22 @@ public class TransactionService {
         
         return transactionRepository.findAllByUserId(user.getId());
     }
+
+    public List<Transaction> findAllTransactionsForCurrentUserAccount(Long accountId) {
+
+        // Get the current authenticated user
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+
+        // Get the user by email
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+        return transactionRepository.findAllByUserIdAndAccountId(user.getId(), accountId);
+    }
 }

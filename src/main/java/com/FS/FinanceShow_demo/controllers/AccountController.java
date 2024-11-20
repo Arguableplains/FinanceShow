@@ -1,10 +1,10 @@
 package com.FS.FinanceShow_demo.controllers;
 
-import com.FS.FinanceShow_demo.CustomUserDetails;
-import com.FS.FinanceShow_demo.entity.Category;
-import com.FS.FinanceShow_demo.services.CategoryService;
+import com.FS.FinanceShow_demo.entity.Account;
+import com.FS.FinanceShow_demo.services.AccountService;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.UserService;
+import com.FS.FinanceShow_demo.CustomUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import jakarta.validation.Valid;
@@ -17,101 +17,101 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/account")
+public class AccountController {
 
     @Autowired
-    private CategoryService categoryService;
+    private AccountService accountService;
     @Autowired
     private UserService userService;
 
-    // Show category registration form
+    // Show Account registration form
     @GetMapping("/registration")
     public String showRegistrationForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         User user = userService.findByEmail(customUserDetails.getUsername());
 
-        Category category = new Category();
-        category.setUser(user);
+        Account account = new Account();
+        account.setUser(user);
 
-        model.addAttribute("category", category);
-        return "/category/registration";
+        model.addAttribute("account", account);
+        return "/account/registration";
     }
 
-    // Save new category
+    // Save new Account
     @PostMapping("/save")
-    public String saveNewCategory(
-            @ModelAttribute("category") @Valid Category category,
+    public String saveNewAccount(
+            @ModelAttribute("account") @Valid Account account,
             BindingResult bindingResult,
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "/category/registration";
+            return "/account/registration";
         }
 
         try
             {
-            categoryService.save(category);
-            return "redirect:/category/list";
+            accountService.save(account);
+            return "redirect:/account/list";
         } catch (Exception e) {
             model.addAttribute("registrationError", e.getMessage());
-            return "/category/registration";
+            return "/account/registration";
         }
     }
 
-    // List all categories
+    // List all accounts
     @GetMapping("/list")
     public String listCategories(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         User user = userService.findByEmail(customUserDetails.getUsername());
 
-        List<Category> categories = categoryService.findByUserId(user.getId());
-        model.addAttribute("categories", categories);
-        return "/category/category-index";
+        List<Account> accounts = accountService.findByUserId(user.getId());
+        model.addAttribute("accounts", accounts);
+        return "/account/account-index";
     }
 
-    // Show category edit form
+    // Show Account edit form
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Category category = categoryService.findById(id);
-        if (category == null) {
-            model.addAttribute("error", "Category not found");
-            return "redirect:/category/list";
+        Account account = accountService.findById(id);
+        if (account == null) {
+            model.addAttribute("error", "account not found");
+            return "redirect:/account/list";
         }
-        model.addAttribute("category", category);
-        return "/category/edit";
+        model.addAttribute("account", account);
+        return "/account/edit";
     }
 
-    // Update category
+    // Update Account
     @PostMapping("/update/{id}")
-    public String updateCategory(
+    public String updateAccount(
             @PathVariable("id") Long id,
-            @ModelAttribute("category") @Valid Category category,
+            @ModelAttribute("account") @Valid Account account,
             BindingResult bindingResult,
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "/category/edit";
+            return "/account/edit";
         }
 
         try {
-            categoryService.save(category);
-            return "redirect:/category/list";
+            accountService.save(account);
+            return "redirect:/account/list";
         } catch (Exception e) {
             model.addAttribute("updateError", "An error occurred during update");
-            return "/category/edit";
+            return "/account/edit";
         }
     }
 
-    // Delete category
+    // Delete Account
     @GetMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable("id") Long id, Model model) {
+    public String deleteAccount(@PathVariable("id") Long id, Model model) {
         try {
-            categoryService.deleteById(id);
-            return "redirect:/category/list";
+            accountService.deleteById(id);
+            return "redirect:/account/list";
         } catch (Exception e) {
             model.addAttribute("deleteError", "An error occurred during deletion");
-            return "redirect:/category/list";
+            return "redirect:/account/list";
         }
     }
 }

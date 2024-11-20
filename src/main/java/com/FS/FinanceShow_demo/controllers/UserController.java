@@ -73,8 +73,10 @@ public class UserController {
   // Updating User
   @GetMapping("/profile")
   public String showUpdateUserForm(Model model) {
+
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     User user;
+
     if (principal instanceof CustomUserDetails customUserDetails) {
       user = customUserDetails.getUser();
     } else {
@@ -88,6 +90,7 @@ public class UserController {
   @GetMapping("/delete")
   public String deleteUser(Model model,
     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
     User user = (User) customUserDetails.getUser();
     userService.delete(user);
 

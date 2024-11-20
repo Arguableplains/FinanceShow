@@ -1,6 +1,9 @@
 package com.FS.FinanceShow_demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,12 +17,16 @@ public class Category{
     private Long id;
 
     @Column(name = "NAME", nullable = false)
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "USER_FOREING_KEY", nullable = false)
+    @NotNull(message = "User is required")
     private User user;
+
 
     public Category(){}
 

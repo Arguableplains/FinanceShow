@@ -1,11 +1,13 @@
 package com.FS.FinanceShow_demo.controllers;
 
+import com.FS.FinanceShow_demo.CustomUserDetails;
 import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.services.CategoryService;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,9 @@ public class CategoryController {
 
     // Show category registration form
     @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(customUserDetails.getUsername());
 
         Category category = new Category();
         category.setUser(user);
@@ -64,12 +63,9 @@ public class CategoryController {
 
     // List all categories
     @GetMapping("/list")
-    public String listCategories(Model model) {
+    public String listCategories(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(customUserDetails.getUsername());
 
         List<Category> categories = categoryService.findByUserId(user.getId());
         model.addAttribute("categories", categories);

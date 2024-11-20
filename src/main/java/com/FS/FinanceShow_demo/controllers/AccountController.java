@@ -5,7 +5,9 @@ import com.FS.FinanceShow_demo.services.AccountService;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.UserService;
 import org.springframework.security.core.Authentication;
+import com.FS.FinanceShow_demo.CustomUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,9 @@ public class AccountController {
 
     // Show Account registration form
     @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(customUserDetails.getUsername());
 
         Account account = new Account();
         account.setUser(user);
@@ -64,12 +63,9 @@ public class AccountController {
 
     // List all accounts
     @GetMapping("/list")
-    public String listCategories(Model model) {
+    public String listCategories(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(customUserDetails.getUsername());
 
         List<Account> accounts = accountService.findByUserId(user.getId());
         model.addAttribute("accounts", accounts);

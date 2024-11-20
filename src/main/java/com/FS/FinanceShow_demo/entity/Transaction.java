@@ -38,6 +38,7 @@ public class Transaction {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "AMOUNT", nullable = false)
     private double amount;
 
@@ -49,6 +50,7 @@ public class Transaction {
     @Column(name = "HAPPENED_ON", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime happenedOn;
+
     @Column(name = "CREATED_ON", nullable = false)
     private Instant createdOn;
     

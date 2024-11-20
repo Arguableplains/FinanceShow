@@ -1,17 +1,18 @@
 function accountChange(accountSelect) {
+    // Setting the new account value to filter the transactions
     const accountValue = accountSelect.value;
 
+    // Calling the method to get transactions - HomeController
     fetch("/update-transactions", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ account_value: accountValue }) // Send the account value
+        body: JSON.stringify({ account_value: accountValue })
     })
     .then(response => response.json())
     .then(data => {
         const transactionsTableBody = document.querySelector("table tbody");
-        const accountsDropdown = accountSelect;
 
         // Clear the current table rows
         transactionsTableBody.innerHTML = "";

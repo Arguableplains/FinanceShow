@@ -50,27 +50,39 @@ public class HomeController{
         return "/hello";
     }
 
+    // Fetch transactions to the Javascript request
     @PostMapping("/update-transactions")
     public ResponseEntity<Map<String, Object>> updateTransactions(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody Map<String, String> requestBody) {
 
+        // Get the new account value to be filtered
         String accountValue = requestBody.get("account_value");
 
+        // Cookies - Set the active account to filter transactions
+
+        // Clear Account Cookie
+        Cookie oldcookie = new Cookie("account_data", null);
+        oldcookie.setPath("/");
+        oldcookie.setMaxAge(0);
+        response.addCookie(oldcookie);
+
+        // Create Account Cookie
         Cookie cookie = new Cookie("account_data", accountValue);
         cookie.setPath("/");
         cookie.setMaxAge(24 * 60 * 60);
         response.addCookie(cookie);
 
+        // Get Transactions
         List<Transaction> transactions = null;
         if(!accountValue.equals("0")){
             transactions = transactionService.findAllTransactionsForCurrentUserAccount(Long.parseLong(accountValue));
         }
-
-        if(accountValue.equals("0")){
+        else if(accountValue.equals("0")){
             transactions = transactionService.findAllTransactionsForCurrentUser();
         }
 
+        // Get User's Accounts
         List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
 
         // Return the updated data as JSON

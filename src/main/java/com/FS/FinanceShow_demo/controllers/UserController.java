@@ -1,7 +1,6 @@
 package com.FS.FinanceShow_demo.controllers;
 
 import com.FS.FinanceShow_demo.CustomUserDetails;
-import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.FS.FinanceShow_demo.services.UserService;
@@ -111,7 +110,8 @@ public class UserController {
       @Valid User user,
       BindingResult result,
       Model model,
-      RedirectAttributes redirectAttributes) {
+      RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
     if (result.hasErrors()) {
       user.setId(id);
@@ -126,28 +126,50 @@ public class UserController {
 
     userService.save(user);
 
-    // New Authentication
-    UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
+    User currentUser = (User) customUserDetails.getUser();
+    if (user.getEmail().equals(currentUser.getEmail())) {
+      // New Authentication
+      UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
 
-    UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(
-        updatedUserDetails,
-        updatedUserDetails.getPassword(),
-        updatedUserDetails.getAuthorities()
-    );
+      UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(
+          updatedUserDetails,
+          updatedUserDetails.getPassword(),
+          updatedUserDetails.getAuthorities()
+      );
 
-    SecurityContextHolder.getContext().setAuthentication(newAuth);
+      SecurityContextHolder.getContext().setAuthentication(newAuth);
 
-    redirectAttributes.addFlashAttribute("successMessage", true);
-    return "redirect:/user/profile";
+      redirectAttributes.addFlashAttribute("successMessage", true);
+      return "redirect:/user/profile";
+    } else {
+      model.addAttribute("user", user);
+      return "user/profile";
+    }
+
   }
 
   // List all users
-    @GetMapping("/list")
-    public String listUsers(Model model) {
-        List<User> users = userService.findAll();
-        model.addAttribute("users", users);
-        return "/user/index";
-    }
+  @GetMapping("/list")
+  public String listUsers(Model model) {
+      List<User> users = userService.findAll();
+      model.addAttribute("users", users);
+      return "/user/index";
+  }
+
+  // Edit user
+  @GetMapping("/edit/{id}")
+  public String showEditForm(
+      @PathVariable("id") Long id, 
+      Model model) {
+      User user = userService.findById(id);
+      if (user == null) {
+          model.addAttribute("error", "User not found");
+          return "redirect:/hello";
+      }
+
+      model.addAttribute("user", user);
+      return "user/profile";
+  }
 
   // Delete user
   @GetMapping("/delete/{id}")

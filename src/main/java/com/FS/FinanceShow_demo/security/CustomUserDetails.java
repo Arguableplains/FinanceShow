@@ -1,4 +1,4 @@
-package com.FS.FinanceShow_demo;
+package com.FS.FinanceShow_demo.security;
 
 import com.FS.FinanceShow_demo.entity.User;
 import org.springframework.security.core.GrantedAuthority;

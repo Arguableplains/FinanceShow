@@ -1,6 +1,7 @@
 package com.FS.FinanceShow_demo.controllers;
 
-import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.security.CustomUserDetails;
+import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.FS.FinanceShow_demo.services.UserService;
@@ -49,7 +50,7 @@ public class UserController {
 
   @PostMapping("/registration")
   public String saveNewUser(
-      @ModelAttribute("user") @Valid User user,
+      @Valid @ModelAttribute("user") User user,
       BindingResult bindingResult,
       Model model) {
 
@@ -60,7 +61,7 @@ public class UserController {
     try {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       userService.save(user);
-      // return "redirect:/user/success";
+
       return "/user/login";
     } catch (Exception e) {
       model.addAttribute("registrationError", "An error occurred during registration");

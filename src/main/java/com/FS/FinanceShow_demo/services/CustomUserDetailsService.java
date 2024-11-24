@@ -2,7 +2,7 @@ package com.FS.FinanceShow_demo.services;
 
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.repository.UserRepository;
-import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.security.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

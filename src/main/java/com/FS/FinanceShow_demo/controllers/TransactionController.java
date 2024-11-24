@@ -1,6 +1,6 @@
 package com.FS.FinanceShow_demo.controllers;
 
-import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.security.CustomUserDetails;
 import com.FS.FinanceShow_demo.entity.Transaction;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.entity.Category;

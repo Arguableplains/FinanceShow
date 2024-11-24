@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 
-import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.security.CustomUserDetails;
 
 import com.FS.FinanceShow_demo.services.AccountService;
 import com.FS.FinanceShow_demo.entity.Account;

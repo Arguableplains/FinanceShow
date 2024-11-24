@@ -1,4 +1,4 @@
-package com.FS.FinanceShow_demo;
+package com.FS.FinanceShow_demo.security;
 
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;

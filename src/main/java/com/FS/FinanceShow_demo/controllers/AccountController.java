@@ -4,7 +4,7 @@ import com.FS.FinanceShow_demo.entity.Account;
 import com.FS.FinanceShow_demo.services.AccountService;
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.services.UserService;
-import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.security.CustomUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.FS.FinanceShow_demo;
+package com.FS.FinanceShow_demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

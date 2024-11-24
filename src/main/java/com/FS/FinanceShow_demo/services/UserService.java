@@ -2,6 +2,9 @@ package com.FS.FinanceShow_demo.services;
 
 import com.FS.FinanceShow_demo.entity.User;
 import com.FS.FinanceShow_demo.repository.UserRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,14 @@ public class UserService {
 
     public User findByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Invalid user email:" + email));
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
 }

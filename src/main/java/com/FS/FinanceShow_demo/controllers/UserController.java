@@ -1,11 +1,15 @@
 package com.FS.FinanceShow_demo.controllers;
 
 import com.FS.FinanceShow_demo.CustomUserDetails;
+import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.FS.FinanceShow_demo.services.UserService;
 import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,7 +74,7 @@ public class UserController {
     return "/user/success";
   }
 
-  // Updating User
+  // Go to profile page
   @GetMapping("/profile")
   public String showUpdateUserForm(Model model) {
 
@@ -87,6 +91,7 @@ public class UserController {
     return "user/profile";
   }
 
+  // Delete own account
   @GetMapping("/delete")
   public String deleteUser(Model model,
     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -99,6 +104,7 @@ public class UserController {
     return "redirect:/user/login";
   }
 
+  // Update user
   @PostMapping("/update/{id}")
   public String updateUser(
       @PathVariable("id") long id,
@@ -134,4 +140,25 @@ public class UserController {
     redirectAttributes.addFlashAttribute("successMessage", true);
     return "redirect:/user/profile";
   }
+
+  // List all users
+    @GetMapping("/list")
+    public String listUsers(Model model) {
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "/user/index";
+    }
+
+  // Delete user
+  @GetMapping("/delete/{id}")
+  public String deleteCategory(@PathVariable("id") Long id, Model model) {
+      try {
+          userService.deleteById(id);
+          return "redirect:/user/list";
+      } catch (Exception e) {
+          model.addAttribute("deleteError", "An error occurred during deletion");
+          return "redirect:/user/list";
+      }
+  }
+
 }

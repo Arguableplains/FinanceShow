@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+
+<body class="flex min-h-screen bg-[#D7ECCD]">
+
+  <!-- Include the sidebar fragment -->
+  <div th:insert="fragments/sidebar :: sidebarFragment"></div>
+
+  <main class="flex-1 p-6">
+    <div class="flex flex-row justify-between mb-4 items-center">
+      <h1 class="text-2xl font-bold">Lista de Usuários</h1>
+    </div>
+
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">ID</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">Nome</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">E-mail</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">Telefone</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">Tipo</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}" class="border-b">
+            <td th:text="${user.id}" class="py-2 px-4"></td>
+            <td th:text="${user.name}" class="py-2 px-4"></td>
+            <td th:text="${user.email}" class="py-2 px-4"></td>
+            <td th:text="${user.cellphone}" class="py-2 px-4"></td>
+            <td th:text="${#strings.arrayJoin(user?.roles?.![name], ', ')}" class="py-2 px-4"></td>            
+            <td class="py-2 px-4">
+              <a th:href="@{/user/delete/{id}(id=${user.id})}" class="text-red-600 hover:underline"
+                onclick="return confirm('Você tem certeza que deseja deletar este usuário?');">
+                Excluir
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </main>
+
+</body>
+
+</html>

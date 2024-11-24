@@ -14,6 +14,9 @@ import com.FS.FinanceShow_demo.entity.Account;
 import com.FS.FinanceShow_demo.services.TransactionService;
 import com.FS.FinanceShow_demo.entity.Transaction;
 
+import com.FS.FinanceShow_demo.services.UserService;
+import com.FS.FinanceShow_demo.entity.User;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -27,11 +30,13 @@ public class HomeController{
     
     private final TransactionService transactionService;
     private final AccountService accountService;
+    private final UserService userService;
     private final HttpServletResponse response;
 
-    public HomeController(TransactionService transactionService, AccountService accountService, HttpServletResponse response) {
+    public HomeController(TransactionService transactionService, AccountService accountService, UserService userService, HttpServletResponse response) {
         this.transactionService = transactionService;
         this.accountService = accountService;
+        this.userService = userService;
         this.response = response;
     }
 
@@ -44,8 +49,10 @@ public class HomeController{
     public String hello(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails){
         List<Transaction> transactions = transactionService.findAllTransactionsForCurrentUser();
         List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
+        User currentUser = userService.findById(customUserDetails.getId());
         model.addAttribute("transactions", transactions);
         model.addAttribute("accounts", accounts);
+        model.addAttribute("user", currentUser);
         
         return "/hello";
     }

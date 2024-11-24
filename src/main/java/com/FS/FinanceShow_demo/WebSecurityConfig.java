@@ -21,6 +21,7 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home", "/css/**", "/images/**", "/user/login", "/user/registration", "/free-pages/**").permitAll()
+				.requestMatchers("/user/list").hasRole("ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -37,6 +38,11 @@ public class WebSecurityConfig {
 			.sessionManagement((session) -> session
 				.sessionFixation().migrateSession()
 				.maximumSessions(1).expiredUrl("/user/login?expired")
+			)
+			.exceptionHandling((exceptions) -> exceptions
+				.accessDeniedHandler((request, response, accessDeniedException) -> {
+					response.sendRedirect("/hello");
+				})
 			)
 			.csrf(AbstractHttpConfigurer::disable);
 

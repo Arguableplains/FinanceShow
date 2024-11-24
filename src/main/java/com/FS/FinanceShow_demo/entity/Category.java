@@ -17,16 +17,15 @@ public class Category{
     private Long id;
 
     @Column(name = "NAME", nullable = false)
-    @NotBlank(message = "Name is required")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @NotBlank(message = "{entity.name.required}")
+    @Size(min = 2, max = 50, message = "{entity.name.size}")
     private String name;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "USER_FOREING_KEY", nullable = false)
-    @NotNull(message = "User is required")
+    @NotNull(message = "{entity.user.required}")
     private User user;
-
 
     public Category(){}
 

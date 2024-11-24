@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -41,6 +41,7 @@ public class Transaction {
     private Long id;
 
     @Column(name = "AMOUNT", nullable = false)
+    @NotNull(message = "{transaction.amount.required}")
     private double amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -50,7 +51,7 @@ public class Transaction {
 
     @Column(name = "HAPPENED_ON", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @NotNull(message = "A data requisitada para a transação está inválida!!")
+    @NotNull(message = "{transaction.happenedOn.required}")
     private LocalDateTime happenedOn;
 
     @Column(name = "CREATED_ON", nullable = false)
@@ -65,6 +66,7 @@ public class Transaction {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "ACCOUNT_ID", nullable = true)
     private Account account;
+
 
     public void setUser(User user) {
         this.user = user;

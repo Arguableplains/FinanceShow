@@ -19,29 +19,29 @@ public class User {
     private Long id;
 
     @Column(name = "NAME", nullable = false)
-    @NotBlank(message = "Name is required")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @NotBlank(message = "{user.name.required}")
+    @Size(min = 2, max = 50, message = "{user.name.size}")
     private String name;
 
     @Column(name = "EMAIL", nullable = false, unique = true)
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email should be valid")
+    @NotBlank(message = "{user.email.required}")
+    @Email(message = "{user.email.valid}")
     private String email;
 
     @Column(name = "PASSWORD", nullable = false)
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @NotBlank(message = "{user.password.required}")
+    @Size(min = 8, message = "{user.password.size}")
     private String password;
 
     @Column(name = "CELLPHONE", nullable = false, unique = true)
-    @NotBlank(message = "Cellphone is required")
-    @Pattern(regexp = "\\+?\\d{10,15}", message = "Cellphone should be a valid number with 10 to 15 digits, optionally prefixed by '+'")
+    @NotBlank(message = "{user.cellphone.required}")
+    @Pattern(regexp = "\\+?\\d{10,15}", message = "{user.cellphone.valid}")
     private String cellphone;
 
     @Column(name = "PICTURE")
     @Pattern(
     regexp = "^data:image/(jpeg|png|gif|bmp|webp);base64,[A-Za-z0-9+/=]+$",
-    message = "Picture must be a valid base64-encoded image in JPEG, PNG, GIF, BMP, or WEBP format"
+    message = "{user.picture.valid}"
     )
     private String picture;
 
@@ -51,7 +51,7 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @NotEmpty(message = "User must have at least one role")
+    @NotEmpty(message = "{user.roles.required}")
     private Set<Role> roles = new HashSet<>();
 
     // Constructor

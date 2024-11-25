@@ -55,11 +55,14 @@ public class HomeController{
         List<Transaction> transactions = transactionService.findAllTransactionsForCurrentUser();
         List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
         List<Category> categories = categoryService.findByUserId(customUserDetails.getId());
+        Double first_sum = transactionService.sumByUserId(customUserDetails.getId());
         User currentUser = userService.findById(customUserDetails.getId());
+
         model.addAttribute("transactions", transactions);
         model.addAttribute("categories", categories);
         model.addAttribute("accounts", accounts);
         model.addAttribute("user", currentUser);
+        model.addAttribute("sum_value", first_sum.toString());
         
         return "/hello";
     }
@@ -90,22 +93,28 @@ public class HomeController{
 
         // Get Transactions
         List<Transaction> transactions = null;
+        Double sum_value;
         if(accountValue.equals("0") & categoryValue.equals("0")){
             transactions = transactionService.findAllTransactionsForCurrentUser();
+            sum_value = transactionService.sumByUserId(customUserDetails.getId());
         }
         else if(accountValue.equals("0") & !categoryValue.equals("0")){
             transactions = transactionService.findAllByUserIdAndCategoryId(customUserDetails.getId(), Long.valueOf(categoryValue));
+            sum_value = transactionService.sumByUserIdAndCategoryId(customUserDetails.getId(), Long.valueOf(categoryValue));
         }
         else if(!accountValue.equals("0") & categoryValue.equals("0")){
             transactions = transactionService.findAllByUserIdAndAccountId(customUserDetails.getId(), Long.valueOf(accountValue));
+            sum_value = transactionService.sumByUserIdAndAccountId(customUserDetails.getId(), Long.valueOf(accountValue));
         }
         else{
             transactions = transactionService.findAllByUserIdAndAccountIdAndCategoryId(customUserDetails.getId(), Long.valueOf(accountValue), Long.valueOf(categoryValue));
+            sum_value = transactionService.sumByUserIdCategoryIdAndAccountId(customUserDetails.getId(), Long.valueOf(categoryValue), Long.valueOf(accountValue));
         }
 
         // Return the updated data as JSON
         Map<String, Object> response = new HashMap<>();
         response.put("transactions", transactions);
+        response.put("sum_value", sum_value.toString());
 
         return ResponseEntity.ok(response);
     }

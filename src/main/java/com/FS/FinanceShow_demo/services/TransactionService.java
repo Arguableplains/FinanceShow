@@ -72,4 +72,20 @@ public class TransactionService {
     public List<Transaction> findAllByUserIdAndAccountIdAndCategoryId(Long userId, Long accountId, Long categoryId){
         return transactionRepository.findAllByUserIdAndAccountIdAndCategoryId(userId, accountId, categoryId);
     }
+
+    public Double sumByUserId(Long userId){
+        return transactionRepository.sumByUserId(userId).orElse(0.0);
+    }
+
+    public Double sumByUserIdAndAccountId(Long userId, Long accountId){
+        return transactionRepository.sumByUserIdAndAccountId(userId, accountId).orElse(0.0);
+    }
+
+    public Double sumByUserIdAndCategoryId(Long userId, Long categoryId){
+        return transactionRepository.sumByUserIdAndCategoryId(userId, categoryId).orElse(0.0);
+    }
+
+    public Double sumByUserIdCategoryIdAndAccountId(Long userId, Long categoryId, Long accountId){
+        return transactionRepository.sumByUserIdCategoryIdAndAccountId(userId, categoryId, accountId).orElse(0.0);
+    }
 }

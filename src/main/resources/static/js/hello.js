@@ -5,6 +5,8 @@ function accountChange() {
     // Setting the category to filter the transactions
     const categoryValue = document.getElementById("categoryID").value;
 
+    const sumValue = document.getElementById("TotalID");
+
     // Calling the method to get transactions - HomeController
     fetch("/update-transactions", {
         method: "POST",
@@ -15,8 +17,10 @@ function accountChange() {
     })
     .then(response => response.json())
     .then(data => {
-        const transactionsTableBody = document.querySelector("table tbody");
 
+        sumValue.textContent = data.sum_value;
+
+        const transactionsTableBody = document.querySelector("table tbody");
         // Clear the current table rows
         transactionsTableBody.innerHTML = "";
 
@@ -38,6 +42,11 @@ function accountChange() {
             `;
             transactionsTableBody.appendChild(row);
         });
+
+        sumValue.classList.add('animate-pulse', 'text-green-500');
+        setTimeout(() => {
+            sumValue.classList.remove('animate-pulse', 'text-green-500');
+        }, 500);
 
     })
     .catch(err => console.error("Error:", err));

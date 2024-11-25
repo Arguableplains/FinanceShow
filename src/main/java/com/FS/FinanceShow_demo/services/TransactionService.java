@@ -61,21 +61,15 @@ public class TransactionService {
         return transactionRepository.findAllByUserId(user.getId());
     }
 
-    public List<Transaction> findAllTransactionsForCurrentUserAccount(Long accountId) {
+    public List<Transaction> findAllByUserIdAndCategoryId(Long userId, Long categoryId){
+        return transactionRepository.findAllByUserIdAndCategoryId(userId, categoryId);
+    }
 
-        // Get the current authenticated user
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
+    public List<Transaction> findAllByUserIdAndAccountId(Long userId, Long accountId){
+        return transactionRepository.findAllByUserIdAndAccountId(userId, accountId);
+    }
 
-        // Get the user by email
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
-
-        return transactionRepository.findAllByUserIdAndAccountId(user.getId(), accountId);
+    public List<Transaction> findAllByUserIdAndAccountIdAndCategoryId(Long userId, Long accountId, Long categoryId){
+        return transactionRepository.findAllByUserIdAndAccountIdAndCategoryId(userId, accountId, categoryId);
     }
 }

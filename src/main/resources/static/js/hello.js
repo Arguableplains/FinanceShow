@@ -1,6 +1,9 @@
-function accountChange(accountSelect) {
+function accountChange() {
     // Setting the new account value to filter the transactions
-    const accountValue = accountSelect.value;
+    const accountValue = document.getElementById("accountID").value;
+
+    // Setting the category to filter the transactions
+    const categoryValue = document.getElementById("categoryID").value;
 
     // Calling the method to get transactions - HomeController
     fetch("/update-transactions", {
@@ -8,7 +11,7 @@ function accountChange(accountSelect) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ account_value: accountValue })
+        body: JSON.stringify({ account_value: accountValue , category_value: categoryValue})
     })
     .then(response => response.json())
     .then(data => {

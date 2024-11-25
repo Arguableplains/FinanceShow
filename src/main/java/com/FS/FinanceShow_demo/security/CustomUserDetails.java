@@ -25,7 +25,7 @@ public class CustomUserDetails implements UserDetails {
         return authorities;
     }
 
-    public long getId(){
+    public Long getId(){
         return user.getId();
     }
 

@@ -108,10 +108,6 @@ public class UserController {
 
     User user = userService.findById(customUserDetails.getId());
 
-    System.out.println("_______________");
-    System.out.println(user.getRoles());
-    System.out.println("_______________");
-
     model.addAttribute("user", user);
     model.addAttribute("allRoles", roleService.findAll());
     return "/user/profile";
@@ -154,7 +150,8 @@ public class UserController {
     userService.save(user);
 
     User currentUser = (User) customUserDetails.getUser();
-    if (user.getEmail().equals(currentUser.getEmail())) {
+
+    if (user.getId().equals(currentUser.getId())) {
       // New Authentication
       UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(user.getEmail());
 

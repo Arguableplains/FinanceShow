@@ -61,6 +61,10 @@
       </div>
     </form>
 
+    <div class="flex-1 flex flex-col justify-center items-center p-6">
+      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza que deseja deletar SUA conta de usuário?');">Deletar Conta</a>
+    <div>
+
     <div th:if="${successMessage}" role="alert" class="mt-4">
       <span class="text-green-600">Perfil atualizado com sucesso!</span>
     </div>

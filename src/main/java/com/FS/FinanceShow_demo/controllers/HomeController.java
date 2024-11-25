@@ -17,6 +17,9 @@ import com.FS.FinanceShow_demo.entity.Transaction;
 import com.FS.FinanceShow_demo.services.UserService;
 import com.FS.FinanceShow_demo.entity.User;
 
+import com.FS.FinanceShow_demo.services.CategoryService;
+import com.FS.FinanceShow_demo.entity.Category;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -31,13 +34,15 @@ public class HomeController{
     private final TransactionService transactionService;
     private final AccountService accountService;
     private final UserService userService;
+    private final CategoryService categoryService;
     private final HttpServletResponse response;
 
-    public HomeController(TransactionService transactionService, AccountService accountService, UserService userService, HttpServletResponse response) {
+    public HomeController(TransactionService transactionService, AccountService accountService, UserService userService, CategoryService categoryService, HttpServletResponse response) {
         this.transactionService = transactionService;
         this.accountService = accountService;
         this.userService = userService;
         this.response = response;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/")
@@ -49,8 +54,10 @@ public class HomeController{
     public String hello(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails){
         List<Transaction> transactions = transactionService.findAllTransactionsForCurrentUser();
         List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
+        List<Category> categories = categoryService.findByUserId(customUserDetails.getId());
         User currentUser = userService.findById(customUserDetails.getId());
         model.addAttribute("transactions", transactions);
+        model.addAttribute("categories", categories);
         model.addAttribute("accounts", accounts);
         model.addAttribute("user", currentUser);
         
@@ -63,8 +70,9 @@ public class HomeController{
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody Map<String, String> requestBody) {
 
-        // Get the new account value to be filtered
+        // Get the new account and category value to be filtered
         String accountValue = requestBody.get("account_value");
+        String categoryValue = requestBody.get("category_value");
 
         // Cookies - Set the active account to filter transactions
 
@@ -82,20 +90,22 @@ public class HomeController{
 
         // Get Transactions
         List<Transaction> transactions = null;
-        if(!accountValue.equals("0")){
-            transactions = transactionService.findAllTransactionsForCurrentUserAccount(Long.parseLong(accountValue));
-        }
-        else if(accountValue.equals("0")){
+        if(accountValue.equals("0") & categoryValue.equals("0")){
             transactions = transactionService.findAllTransactionsForCurrentUser();
         }
-
-        // Get User's Accounts
-        List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
+        else if(accountValue.equals("0") & !categoryValue.equals("0")){
+            transactions = transactionService.findAllByUserIdAndCategoryId(customUserDetails.getId(), Long.valueOf(categoryValue));
+        }
+        else if(!accountValue.equals("0") & categoryValue.equals("0")){
+            transactions = transactionService.findAllByUserIdAndAccountId(customUserDetails.getId(), Long.valueOf(accountValue));
+        }
+        else{
+            transactions = transactionService.findAllByUserIdAndAccountIdAndCategoryId(customUserDetails.getId(), Long.valueOf(accountValue), Long.valueOf(categoryValue));
+        }
 
         // Return the updated data as JSON
         Map<String, Object> response = new HashMap<>();
         response.put("transactions", transactions);
-        response.put("accounts", accounts);
 
         return ResponseEntity.ok(response);
     }

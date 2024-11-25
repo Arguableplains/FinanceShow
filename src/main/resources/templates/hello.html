@@ -18,11 +18,18 @@
     <div class="flex flex-row justify-between mb-4 items-center">
       <h2 class="text-xl font-semibold">Suas Transações</h2>
 
-      <select onchange="accountChange(this);" th:object="${accounts}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
+      <select id="accountID" onchange="accountChange();" th:object="${accounts}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
           <option th:value="0" selected>Todas as Contas</option>
           <option th:each="account : ${accounts}"
                   th:value="${account.id}"
                   th:text="${account.name}">Conta</option>
+      </select>
+
+      <select id="categoryID" onchange="accountChange();" th:object="${categories}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
+          <option th:value="0" selected>Todas as Categorias</option>
+          <option th:each="category : ${categories}"
+                  th:value="${category.id}"
+                  th:text="${category.name}">Category</option>
       </select>
 
       <a href="/transaction/registration"

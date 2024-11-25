@@ -3,12 +3,17 @@ package com.FS.FinanceShow_demo.controllers;
 import com.FS.FinanceShow_demo.security.CustomUserDetails;
 import com.FS.FinanceShow_demo.entity.Category;
 import com.FS.FinanceShow_demo.entity.User;
+import com.FS.FinanceShow_demo.entity.Role;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.FS.FinanceShow_demo.services.UserService;
 import com.FS.FinanceShow_demo.services.CustomUserDetailsService;
+import com.FS.FinanceShow_demo.services.CategoryService;
+import com.FS.FinanceShow_demo.services.RoleService;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,13 +32,17 @@ public class UserController {
 
   private final UserService userService;
   private final CustomUserDetailsService userDetailsService;
+  private final CategoryService categoryService;
+  private final RoleService roleService;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserController(UserService userService, PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService) {
+  public UserController(UserService userService, PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService, CategoryService categoryService, RoleService roleService) {
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
     this.userDetailsService = userDetailsService;
+    this.categoryService = categoryService;
+    this.roleService = roleService;
   }
 
   @GetMapping("/login")
@@ -44,6 +53,7 @@ public class UserController {
   // Creating User
   @GetMapping("/registration")
   public String showRegistrationForm(Model model) {
+
     model.addAttribute("user", new User());
     return "/user/registration";
   }
@@ -60,7 +70,25 @@ public class UserController {
 
     try {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+      // Basic Role
+      Set<Role> roles = new HashSet<>();
+      roles.add(roleService.findByName("ROLE_USER"));
+      user.setRoles(roles);
+
       userService.save(user);
+
+      // Basic Categories For user
+      Category[] defaultCategories = {
+          new Category("Food/Drinks", user),
+          new Category("Entertainment", user),
+          new Category("Health", user)
+      };
+
+      // Save categories
+      for (Category category : defaultCategories) {
+          categoryService.save(category);
+      }
 
       return "/user/login";
     } catch (Exception e) {
@@ -76,19 +104,17 @@ public class UserController {
 
   // Go to profile page
   @GetMapping("/profile")
-  public String showUpdateUserForm(Model model) {
+  public String showUpdateUserForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    User user;
+    User user = userService.findById(customUserDetails.getId());
 
-    if (principal instanceof CustomUserDetails customUserDetails) {
-      user = customUserDetails.getUser();
-    } else {
-      return "redirect:/login";
-    }
+    System.out.println("_______________");
+    System.out.println(user.getRoles());
+    System.out.println("_______________");
 
     model.addAttribute("user", user);
-    return "user/profile";
+    model.addAttribute("allRoles", roleService.findAll());
+    return "/user/profile";
   }
 
   // Delete own account
@@ -144,6 +170,7 @@ public class UserController {
       return "redirect:/user/profile";
     } else {
       model.addAttribute("user", user);
+      model.addAttribute("allRoles", roleService.findAll());
       return "user/profile";
     }
 
@@ -169,6 +196,7 @@ public class UserController {
       }
 
       model.addAttribute("user", user);
+      model.addAttribute("allRoles", roleService.findAll());
       return "user/profile";
   }
 

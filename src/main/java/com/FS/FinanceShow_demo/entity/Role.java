@@ -1,7 +1,6 @@
 package com.FS.FinanceShow_demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "roles")
@@ -13,13 +12,11 @@ public class Role {
     private Long id;
 
     @Column(name= "NAME", nullable = false, unique = true)
-    @Size(min = 3, message = "Name is required")
     private String name;
 
     public Role(){}
 
-    public Role(Long id, String name){
-        this.id = id;
+    public Role(String name){
         this.name = name;
     }
 

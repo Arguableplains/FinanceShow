@@ -37,3 +37,13 @@ INSERT INTO user_roles (USER_ID, ROLE_ID)
         (SELECT id FROM users WHERE email = 'a@a'),
         (SELECT id FROM roles WHERE name = 'ROLE_ADMIN')
     );
+
+INSERT INTO user_roles (USER_ID, ROLE_ID)
+    VALUES (
+        (SELECT id FROM users WHERE email = 'admin@admin.com'),
+        (SELECT id FROM roles WHERE name = 'ROLE_USER')
+    ),
+    (
+        (SELECT id FROM users WHERE email = 'a@a'),
+        (SELECT id FROM roles WHERE name = 'ROLE_USER')
+    );

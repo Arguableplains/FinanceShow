@@ -51,7 +51,6 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @NotEmpty(message = "{user.roles.required}")
     private Set<Role> roles = new HashSet<>();
 
     // Constructor
@@ -117,7 +116,7 @@ public class User {
 
     public Set<Role> getRoles() {
 
-        if (roles == null) {
+        if (roles.isEmpty()) {
             roles = new HashSet<>();
         }
 

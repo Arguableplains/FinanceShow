@@ -18,21 +18,29 @@
         <label for="name" class="block font-medium mb-1">Nome:</label>
         <input type="text" th:field="*{name}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+          <p th:each="error: ${#fields.errors('name')}" th:text="${error}" class="mt-1 text-sm text-red-600">Validation
+            error</p>
       </div>
       <div>
         <label for="email" class="block font-medium mb-1">Email:</label>
         <input type="email" th:field="*{email}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+          <p th:each="error: ${#fields.errors('email')}" th:text="${error}" class="mt-1 text-sm text-red-600">Validation
+            error</p>
       </div>
       <div>
         <label for="cellphone" class="block font-medium mb-1">Celular:</label>
         <input type="tel" th:field="*{cellphone}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+        <p th:each="error : ${#fields.errors('cellphone')}" th:text="${error}" class="mt-1 text-sm text-red-600">
+            Validation error</p>
       </div>
       <div>
         <label for="password" class="block font-medium mb-1">Senha:</label>
         <input type="password" th:field="*{password}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+        <p th:each="error : ${#fields.errors('password')}" th:text="${error}" class="mt-1 text-sm text-red-600">
+            Validation error</p>
       </div>
       <div class="text-left" sec:authorize="hasRole('ADMIN')">
         <label th:text="#{label.user.roles}" for="roles" class="block text-sm font-medium text-gray-700 mb-1">
@@ -62,7 +70,7 @@
     </form>
 
     <div class="flex-1 flex flex-col justify-center items-center p-6">
-      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza que deseja deletar SUA conta de usuário?');">Deletar Conta</a>
+      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza?');">Deletar Conta</a>
     <div>
 
     <div th:if="${successMessage}" role="alert" class="mt-4">

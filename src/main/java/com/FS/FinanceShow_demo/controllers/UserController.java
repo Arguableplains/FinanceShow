@@ -138,6 +138,7 @@ public class UserController {
 
     if (result.hasErrors()) {
       user.setId(id);
+      model.addAttribute("allRoles", roleService.findAll());
       return "/user/profile";
     }
 
@@ -166,9 +167,12 @@ public class UserController {
       redirectAttributes.addFlashAttribute("successMessage", true);
       return "redirect:/user/profile";
     } else {
+
       model.addAttribute("user", user);
       model.addAttribute("allRoles", roleService.findAll());
-      return "user/profile";
+      redirectAttributes.addFlashAttribute("successMessage", true);
+
+      return "redirect:/user/profile";
     }
 
   }
@@ -194,7 +198,7 @@ public class UserController {
 
       model.addAttribute("user", user);
       model.addAttribute("allRoles", roleService.findAll());
-      return "user/profile";
+      return "/user/profile";
   }
 
   // Delete user

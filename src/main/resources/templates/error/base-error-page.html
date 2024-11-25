@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <title>Finance Show Wrong</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+
+<body class="min-h-screen bg-[#D7ECCD] flex">
+
+  <!-- Include the sidebar fragment -->
+  <div th:insert="fragments/sidebar :: sidebarFragment"></div>
+
+  <div class="w-full flex items-center justify-center">
+    <div class="text-center bg-white rounded-xl shadow-lg p-4">
+      <h1 class="text-3xl font-bold mb-4">Bem Vindo(a) a página de erro!!</h1>
+
+      <h2 class="text-xl font-medium mb-4">Esta é a página de ERRO do Finance Show!</h2>
+
+      <p class="text-lg">
+        Clique
+        <a href="/hello" class="text-blue-600 font-medium hover:underline">
+          aqui
+        </a>
+        para voltar a página inicial.
+      </p>
+    </div>
+  </div>
+
+</body>
+
+</html>

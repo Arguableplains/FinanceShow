@@ -31,8 +31,8 @@
         <select th:field="*{category}"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
           required>
-          <option value="" disabled selected th:text="#{label.select.category}">Select a Category</option>
-          <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category
+          <option value="" disabled selected th:text="#{label.select.category}">Selecione uma categoria</option>
+          <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoria
             Option</option>
         </select>
         <div th:if="${noCategoriesFound}" role="alert">

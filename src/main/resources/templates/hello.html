@@ -64,7 +64,7 @@
         class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
         required>
         <option th:value="0" selected>Todas as Categorias</option>
-        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoria
         </option>
       </select>
 
@@ -88,11 +88,11 @@
         </thead>
         <tbody>
           <tr th:each="transaction : ${transactions}" class="border-b">
-            <td th:text="${transaction?.account?.name}" class="py-2 px-4">Account</td>
-            <td th:text="${transaction.amount}" class="py-2 px-4">Amount</td>
-            <td th:text="${transaction?.category?.name}" class="py-2 px-4">Category</td>
-            <td th:text="${transaction.happenedOn}" class="py-2 px-4">Happened On</td>
-            <td th:text="${transaction.createdOn}" class="py-2 px-4">Created On</td>
+            <td th:text="${transaction?.account?.name}" class="py-2 px-4">Grupo de Transação</td>
+            <td th:text="${transaction.amount}" class="py-2 px-4">Montante</td>
+            <td th:text="${transaction?.category?.name}" class="py-2 px-4">Categoria</td>
+            <td th:text="${transaction.happenedOn}" class="py-2 px-4">Data</td>
+            <td th:text="${transaction.createdOn}" class="py-2 px-4">Criado em</td>
             <td class="py-2 px-4">
               <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}"
                 class="text-blue-600 hover:underline">Editar</a>

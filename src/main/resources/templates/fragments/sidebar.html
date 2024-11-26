@@ -14,31 +14,33 @@
       </div>
       <nav class="flex flex-col space-y-4">
         <a href="/hello"
-          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.fragment.initial_page}">Página
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+          th:text="#{label.fragment.initial_page}">Página
           Inicial</a>
-        <a href="/user/profile"
-          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.fragment.update_profile}">Atualizar
-          Perfil</a>
-        <a href="/transaction/registration"
-          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.fragment.add_transaction}">Adicionar
-          Transação</a>
         <a href="/category/list"
-          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.fragment.manage_categories}">Gerenciar
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+          th:text="#{label.fragment.manage_categories}">Gerenciar
           Categorias</a>
         <a href="/account/list"
-          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.fragment.manage_accounts}">Gerenciar
+          class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+          th:text="#{label.fragment.manage_accounts}">Gerenciar
           Grupos de Transação</a>
         <a href="/user/list"
           class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
           sec:authorize="hasRole('ADMIN')" th:text="#{label.fragment.manage_users}">
-           Gerenciar Usuários
-       </a>
+          Gerenciar Usuários
+        </a>
       </nav>
     </div>
     <div class="text-center flex flex-col space-y-4">
+      <a href="/user/profile"
+        class="py-2 px-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+        th:text="#{label.fragment.update_profile}">Atualizar
+        Perfil</a>
       <form th:action="@{/logout}" method="post">
         <button type="submit"
-          class="w-full py-2 px-4 bg-red-500 rounded-lg text-white font-medium hover:bg-red-700 transition duration-150" th:text="#{label.fragment.logoff}">Sair</button>
+          class="w-full py-2 px-4 bg-red-500 rounded-lg text-white font-medium hover:bg-red-700 transition duration-150"
+          th:text="#{label.fragment.logoff}">Sair</button>
       </form>
     </div>
   </aside>

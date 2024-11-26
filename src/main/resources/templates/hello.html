@@ -18,22 +18,21 @@
   <main class="flex-1 p-6">
     <!-- Dashboard Section -->
     <section class="mb-6">
-      <h1 class="text-2xl font-bold mb-3">Olá <span th:text="${user.name}"></span>!</h1>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Total Balance -->
         <div class="bg-white p-4 rounded shadow">
           <h2 class="text-lg font-semibold">Saldo Total</h2>
-          <p class="text-2xl" th:text="${sum_value}"></p>
+          <p class="text-2xl font-bold" th:text="${sum_value}"></p>
         </div>
         <!-- Total Income -->
         <div class="bg-white p-4 rounded shadow">
           <h2 class="text-lg font-semibold">Total de Entradas</h2>
-          <p class="text-2xl" th:text="${totalIncome}"></p>
+          <p class="text-2xl font-bold text-green-600" th:text="${totalIncome}"></p>
         </div>
         <!-- Total Expenses -->
         <div class="bg-white p-4 rounded shadow">
           <h2 class="text-lg font-semibold">Total de Saídas</h2>
-          <p class="text-2xl" th:text="${totalExpenses}"></p>
+          <p class="text-2xl font-bold text-red-600" th:text="${totalExpenses}"></p>
         </div>
       </div>
       <!-- Charts -->

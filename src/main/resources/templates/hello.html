@@ -5,6 +5,9 @@
 <head>
   <title>Página Inicial</title>
   <link rel="stylesheet" th:href="@{/css/output.css}">
+  <link rel="stylesheet" th:href="@{/css/chart.css}">
+  <!-- Include Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="min-h-screen bg-[#D7ECCD] flex">
@@ -13,29 +16,57 @@
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
   <main class="flex-1 p-6">
-    <h1 class="text-2xl font-bold mb-3">Olá <span th:text="${user.name}"></span>!</h1>
-
-    <div class="flex flex-row">
-      <h2 class="text-xl font-semibold">Total: </h2>
-      <span id="TotalID" th:text="${sum_value}" class="text-3xl font-bold text-gray-800 bg-white px-4 py-2 rounded shadow-md border border-gray-300 transition-transform transform hover:scale-105">
-></span>
-    </div>
+    <!-- Dashboard Section -->
+    <section class="mb-6">
+      <h1 class="text-2xl font-bold mb-3">Olá <span th:text="${user.name}"></span>!</h1>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Total Balance -->
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold">Saldo Total</h2>
+          <p class="text-2xl" th:text="${sum_value}"></p>
+        </div>
+        <!-- Total Income -->
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold">Total de Entradas</h2>
+          <p class="text-2xl" th:text="${totalIncome}"></p>
+        </div>
+        <!-- Total Expenses -->
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold">Total de Saídas</h2>
+          <p class="text-2xl" th:text="${totalExpenses}"></p>
+        </div>
+      </div>
+      <!-- Charts -->
+      <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6 justify-center mx-auto">
+        <!-- Expenses by Category Chart -->
+        <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
+          <h2 class="text-lg font-semibold mb-4 text-center">Despesas por Categoria</h2>
+          <canvas id="expensesByCategoryChart" class="fixed-dimension-square"></canvas>
+        </div>
+        <!-- Transactions Over Time Chart -->
+        <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
+          <h2 class="text-lg font-semibold mb-4 text-center">Saldo ao Longo do Tempo</h2>
+          <canvas id="transactionsOverTimeChart" class="fixed-dimension-horizontal"></canvas>
+        </div>
+      </div>
+    </section>
 
     <div class="flex flex-row justify-between mb-4 items-center">
       <h2 class="text-xl font-semibold">Suas Transações</h2>
 
-      <select id="accountID" onchange="accountChange();" th:object="${accounts}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
-          <option th:value="0" selected>Todas as Contas</option>
-          <option th:each="account : ${accounts}"
-                  th:value="${account.id}"
-                  th:text="${account.name}">Conta</option>
+      <select id="accountID" onchange="accountChange();" th:object="${accounts}"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+        required>
+        <option th:value="0" selected>Todas as Contas</option>
+        <option th:each="account : ${accounts}" th:value="${account.id}" th:text="${account.name}">Conta</option>
       </select>
 
-      <select id="categoryID" onchange="accountChange();" th:object="${categories}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
-          <option th:value="0" selected>Todas as Categorias</option>
-          <option th:each="category : ${categories}"
-                  th:value="${category.id}"
-                  th:text="${category.name}">Category</option>
+      <select id="categoryID" onchange="accountChange();" th:object="${categories}"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+        required>
+        <option th:value="0" selected>Todas as Categorias</option>
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category
+        </option>
       </select>
 
       <a href="/transaction/registration"
@@ -77,6 +108,18 @@
 
 </body>
 
+<!-- Include your existing scripts -->
 <script src="/js/hello.js"></script>
+
+<!-- Pass data to JavaScript -->
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var expensesByCategoryData = /*[[${expensesByCategoryJson}]]*/ '[]';
+  var transactionsOverTimeData = /*[[${transactionsOverTimeJson}]]*/ '[]';
+  /*]]>*/
+</script>
+
+<!-- Add a script to render charts -->
+<script src="/js/dashboardCharts.js"></script>
 
 </html>

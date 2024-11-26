@@ -88,4 +88,20 @@ public class TransactionService {
     public Double sumByUserIdCategoryIdAndAccountId(Long userId, Long categoryId, Long accountId){
         return transactionRepository.sumByUserIdCategoryIdAndAccountId(userId, categoryId, accountId).orElse(0.0);
     }
+
+    public Double sumIncomeByUserId(Long userId) {
+        return transactionRepository.sumIncomeByUserId(userId).orElse(0.0);
+    }
+
+    public Double sumExpensesByUserId(Long userId) {
+        return transactionRepository.sumExpensesByUserId(userId).orElse(0.0);
+    }
+
+    public List<Object[]> sumExpensesByCategory(Long userId) {
+        return transactionRepository.sumExpensesByCategory(userId);
+    }
+
+    public List<Object[]> sumTransactionsOverTime(Long userId) {
+        return transactionRepository.sumTransactionsOverTime(userId);
+    }
 }

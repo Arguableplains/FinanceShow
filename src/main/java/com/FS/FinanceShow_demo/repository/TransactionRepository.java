@@ -27,4 +27,24 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.user.id = :userId AND t.category.id = :categoryId AND t.account.id = :accountId")
     Optional<Double> sumByUserIdCategoryIdAndAccountId(@Param("userId") Long userId, @Param("categoryId") Long categoryId, @Param("accountId") Long accountId);
 
+    // Sum of income (positive amounts)
+    @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.user.id = :userId AND t.amount > 0")
+    Optional<Double> sumIncomeByUserId(@Param("userId") Long userId);
+
+    // Sum of expenses (negative amounts)
+    @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.user.id = :userId AND t.amount < 0")
+    Optional<Double> sumExpensesByUserId(@Param("userId") Long userId);
+
+    // Sum of expenses by category
+    @Query("SELECT t.category.name, SUM(t.amount) FROM Transaction t WHERE t.user.id = :userId AND t.amount < 0 GROUP BY t.category.name")
+    List<Object[]> sumExpensesByCategory(@Param("userId") Long userId);
+
+    // Sum of transactions over time (daily sums)
+    @Query("SELECT CAST(t.happenedOn AS date) as date, SUM(t.amount) " +
+       "FROM Transaction t " +
+       "WHERE t.user.id = :userId " +
+       "GROUP BY CAST(t.happenedOn AS date) " +
+       "ORDER BY date")
+    List<Object[]> sumTransactionsOverTime(@Param("userId") Long userId);
+
 }

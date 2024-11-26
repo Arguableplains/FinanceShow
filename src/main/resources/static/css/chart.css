@@ -1,0 +1,14 @@
+.fixed-dimension-square {
+  width: 300px;  /* Set a fixed width, adjust as needed */
+  height: 200px; /* Match height to width for a square */
+}
+
+.fixed-dimension-horizontal {
+  width: 600px;  /* Choose a wider width to suit your needs */
+  height: 200px; /* Consistent height for uniformity */
+}
+
+.chart-container {
+  max-width: fit-content; /* Prevents overflowing space while centering content */
+  margin: 0 auto; /* Centers the charts within their flexible containers */
+}

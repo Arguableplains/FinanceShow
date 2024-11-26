@@ -15,6 +15,8 @@ import com.FS.FinanceShow_demo.services.TransactionService;
 import com.FS.FinanceShow_demo.entity.Transaction;
 
 import com.FS.FinanceShow_demo.services.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.FS.FinanceShow_demo.entity.User;
 
 import com.FS.FinanceShow_demo.services.CategoryService;
@@ -51,18 +53,34 @@ public class HomeController{
     }
 
     @GetMapping("/hello")
-    public String hello(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public String hello(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) throws JsonProcessingException{
         List<Transaction> transactions = transactionService.findAllTransactionsForCurrentUser();
         List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
         List<Category> categories = categoryService.findByUserId(customUserDetails.getId());
+
         Double first_sum = transactionService.sumByUserId(customUserDetails.getId());
         User currentUser = userService.findById(customUserDetails.getId());
 
+        Double totalIncome = transactionService.sumIncomeByUserId(customUserDetails.getId());
+        Double totalExpenses = transactionService.sumExpensesByUserId(customUserDetails.getId());
+        List<Object[]> expensesByCategory = transactionService.sumExpensesByCategory(customUserDetails.getId());
+        List<Object[]> transactionsOverTime = transactionService.sumTransactionsOverTime(customUserDetails.getId());
+
+        // Convert data to JSON strings
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expensesByCategoryJson = objectMapper.writeValueAsString(expensesByCategory);
+        String transactionsOverTimeJson = objectMapper.writeValueAsString(transactionsOverTime);
+
+        // Add to model
         model.addAttribute("transactions", transactions);
         model.addAttribute("categories", categories);
         model.addAttribute("accounts", accounts);
         model.addAttribute("user", currentUser);
         model.addAttribute("sum_value", first_sum.toString());
+        model.addAttribute("totalIncome", totalIncome);
+        model.addAttribute("totalExpenses", totalExpenses);
+        model.addAttribute("expensesByCategoryJson", expensesByCategoryJson);
+        model.addAttribute("transactionsOverTimeJson", transactionsOverTimeJson);
         
         return "/hello";
     }

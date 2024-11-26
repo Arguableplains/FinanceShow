@@ -12,33 +12,42 @@
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
   <main class="flex-1 flex flex-col justify-center items-center p-6 ml-64">
-    <h2 class="text-2xl font-bold mb-4" th:text="#{label.transaction.new_transaction}" >Registro de Transação</h2>
-
+    <h2 class="text-2xl font-bold mb-4" th:text="#{label.transaction.new_transaction}">Registro de Transação</h2>
     <form th:action="@{/transaction/save}" th:method="post" th:object="${transaction}"
       class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
-      <div class="flex flex-row">
 
-        <div class="flex-col">
-          <label th:text="#{label.transaction.amount}" class="block font-medium mb-1">Montante</label>
-          <input type="number" step="0.01" th:field="*{amount}" required
+      <div class="flex-col">
+        <label th:text="#{label.transaction.amount}" class="block font-medium mb-1">Montante</label>
+        <div class="flex items-center">
+          <input type="number" step="0.01" min="0" th:field="*{amount}" required
             class="w-full px-4 py-2 mr-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
-          <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" class="text-red-600">Erro de validação</p>
+          <div class="flex items-center ml-2">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="transactionType" name="isIncome" class="sr-only peer" checked>
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+              </div>
+              <span class="ml-2 text-sm font-medium" id="transactionTypeLabel">Income</span>
+            </label>
+          </div>
         </div>
-
-        <div class="flex-col">
-          <label th:text="#{label.transaction.account}" class="block font-medium mb-1">Conta</label>
-
-          <select onchange="accountRegistrationChange(this);" th:field="${transaction.account}" th:object="${accounts}" class="px-4 py-2 ml-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
-            <option th:value="0" th:text="#{label.transaction.no_account_selected}" selected>Nenhuma Conta Selecionada</option>
-            <option th:each="account : ${accounts}"
-                    th:value="${account.id}"
-                    th:text="${account.name}">Conta</option>
-          </select>
-          <p th:each="error : ${#fields.errors('account')}" th:text="${error}" class="text-red-600">Erro de validação
-          </p>
-        </div>
-
+        <p th:each="error : ${#fields.errors('amount')}" th:text="${error}" class="text-red-600">Erro de validação</p>
       </div>
+
+      <div class="flex-col">
+        <label th:text="#{label.transaction.account}" class="block font-medium mb-1">Conta</label>
+
+        <select onchange="accountRegistrationChange(this);" th:field="${transaction.account}" th:object="${accounts}"
+          class="px-4 py-2 ml-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+          required>
+          <option th:value="0" th:text="#{label.transaction.no_account_selected}" selected>Nenhuma Conta Selecionada
+          </option>
+          <option th:each="account : ${accounts}" th:value="${account.id}" th:text="${account.name}">Conta</option>
+        </select>
+        <p th:each="error : ${#fields.errors('account')}" th:text="${error}" class="text-red-600">Erro de validação
+        </p>
+      </div>
+
       <div class="flex-col">
         <label th:text="#{label.transaction.category}" class="block font-medium mb-1">Categoria</label>
         <select th:field="*{category}"
@@ -50,14 +59,11 @@
         </select>
         <p th:each="error : ${#fields.errors('category')}" th:text="${error}" class="text-red-600">Erro de validação</p>
         <div th:if="${noCategoriesFound}" role="alert">
-          <span
-              th:text="#{label.transaction.no_categories_saved}"
-              class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
-          ></span>
-          <a
-            class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{label.transaction.add_category}" href="/category/registration"
-          >
-              Adicionar Nova Categoria
+          <span th:text="#{label.transaction.no_categories_saved}"
+            class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"></span>
+          <a class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+            th:text="#{label.transaction.add_category}" href="/category/registration">
+            Adicionar Nova Categoria
           </a>
         </div>
       </div>
@@ -85,5 +91,15 @@
 </body>
 
 <script src="/js/transaction.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const typeSwitch = document.getElementById('transactionType');
+    const typeLabel = document.getElementById('transactionTypeLabel');
+
+    typeSwitch.addEventListener('change', function () {
+      typeLabel.textContent = this.checked ? 'Entrada' : 'Saída';
+    });
+  });
+</script>
 
 </html>

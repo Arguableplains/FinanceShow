@@ -93,6 +93,7 @@ public class TransactionController {
             @ModelAttribute("transaction") @Valid Transaction transaction,
             @RequestParam("category") Long categoryId,
             @RequestParam("account") Long accountId,
+            @RequestParam(value = "isIncome", required = false) Boolean isIncome,
             BindingResult bindingResult,
             Model model,
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -103,6 +104,11 @@ public class TransactionController {
             List<Category> categories = categoryService.findByUserId(((User)customUserDetails.getUser()).getId());
             model.addAttribute("categories", categories);
             bindingResult.rejectValue("amount", "error.transaction", "Invalid Amount");
+        }
+
+        // Convert amount to negative if it's an expense
+        if (isIncome == null || !isIncome) {
+            transaction.setAmount(transaction.getAmount() * -1);
         }
 
         if (bindingResult.hasErrors()) {

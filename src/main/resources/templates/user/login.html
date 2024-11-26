@@ -16,10 +16,10 @@
   <div class="w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
     <div class="text-center">
       <!-- Alert Messages -->
-      <div th:if="${param.error}" class="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
+      <div th:if="${param.error}" th:text="#{user.login.error}" class="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
         Invalid username and password.
       </div>
-      <div th:if="${param.logout}" class="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
+      <div th:if="${param.logout}" th:text="#{user.login.logout_message}" class="mb-4 text-red-600 bg-red-50 p-3 rounded-lg">
         You have been logged out.
       </div>
 
@@ -27,7 +27,7 @@
       <form th:action="@{/user/login}" method="post">
         <!-- Email Field -->
         <div class="text-left">
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="email" th:text="#{user.login.email}" class="block text-sm font-medium text-gray-700 mb-1">
             Email
           </label>
           <input type="email" id="email" name="username" placeholder="example@example.com"
@@ -36,7 +36,7 @@
 
         <!-- Password Field -->
         <div class="text-left pt-6">
-          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="password" th:text="#{user.login.password}" class="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
           <input type="password" id="password" name="password" placeholder="************" required
@@ -46,7 +46,7 @@
         <!-- Sign In Button -->
         <div class="pt-6">
           <button type="submit"
-            class="w-full py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">
+            class="w-full py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{user.login.sing_in}">
             Sign In
           </button>
         </div>
@@ -55,7 +55,7 @@
       <!-- Sign Up Link -->
       <div class="mt-4">
         <a href="/user/registration"
-          class="block w-full py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150 text-center">
+          class="block w-full py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150 text-center" th:text="#{user.login.sing_up}">
           Sign up
         </a>
       </div>

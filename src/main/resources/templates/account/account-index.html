@@ -15,9 +15,9 @@
 
   <main class="flex-1 p-6 ml-64">
     <div class="flex flex-row justify-between mb-4 items-center">
-      <h1 class="text-2xl font-bold">Lista de Grupos de Transação</h1>
+      <h1 class="text-2xl font-bold" th:text="#{account.title.list}">Lista de Grupos de Transação</h1>
       <a href="/account/registration"
-        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150">
+        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{account.add_new_account}">
         Adicionar Nova Conta Bancária ou Grupo de Transação
       </a>
     </div>
@@ -27,9 +27,10 @@
       <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead class="bg-gray-100">
           <tr>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">ID</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Nome</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Ações</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700" th:text="#{account.table.id}">ID</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700" th:text="#{account.table.name}">Nome</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700"
+            th:text="#{account.table.actions}">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +39,8 @@
             <td th:text="${account.name}" class="py-2 px-4"></td>
             <td class="py-2 px-4">
               <a th:href="@{/account/delete/{id}(id=${account.id})}" class="text-red-600 hover:underline"
-                onclick="return confirm('Você tem certeza que deseja deletar esta conta bancária?');">
+                onclick="return confirm('Você tem certeza que deseja deletar esta conta bancária?');"
+                th:text="#{account.delete}">
                 Excluir
               </a>
             </td>

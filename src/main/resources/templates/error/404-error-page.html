@@ -13,7 +13,7 @@
 
   <div class="w-full flex items-center justify-center ml-64">
     <div class="text-center bg-white rounded-xl shadow-lg p-4 mix-blend-multiply">
-      <h1 class="text-3xl font-bold mb-4">Bem Vindo(a) a ... Nada!!</h1>
+      <h1 class="text-3xl font-bold mb-4" th:text="#{label.welcome.nothing}">Bem Vindo(a) a ... Nada!!</h1>
 
       <div class="flex items-center justify-center">
         <h2 class="text-xl font-medium">Finance Show! 404</h2>
@@ -22,13 +22,19 @@
         </div>
       </div>
 
-      <p class="text-lg">
+      <div class="justify-center items-center flex flex-row">
+      <p class="text-lg" th:text="#{label.click}">
         Clique
-        <a href="/hello" class="text-blue-600 font-medium hover:underline">
+        </p>
+        &nbsp;
+        <a href="/hello" th:text="#{label.click.here}" class="text-blue-600 font-medium hover:underline">
           aqui
         </a>
-        para voltar a página inicial.
+        &nbsp;
+        <p class="text-lg" th:text="#{label.click.nothing}">
+        para prosseguir.
       </p>
+    <div>
 
     </div>
   </div>

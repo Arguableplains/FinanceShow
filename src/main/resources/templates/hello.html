@@ -21,17 +21,17 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Total Balance -->
         <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-lg font-semibold">Saldo Total</h2>
+          <h2 class="text-lg font-semibold" th:text="#{hello.total}">Saldo Total</h2>
           <p class="text-2xl font-bold" th:text="${sum_value}"></p>
         </div>
         <!-- Total Income -->
         <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-lg font-semibold">Total de Entradas</h2>
+          <h2 class="text-lg font-semibold" th:text="#{hello.total.entries}">Total de Entradas</h2>
           <p class="text-2xl font-bold text-green-600" th:text="${totalIncome}"></p>
         </div>
         <!-- Total Expenses -->
         <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-lg font-semibold">Total de Saídas</h2>
+          <h2 class="text-lg font-semibold" th:text="#{hello.total.expenses}">Total de Saídas</h2>
           <p class="text-2xl font-bold text-red-600" th:text="${totalExpenses}"></p>
         </div>
       </div>
@@ -39,37 +39,37 @@
       <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6 justify-center mx-auto">
         <!-- Expenses by Category Chart -->
         <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
-          <h2 class="text-lg font-semibold mb-4 text-center">Despesas por Categoria</h2>
+          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.category_expenses}">Despesas por Categoria</h2>
           <canvas id="expensesByCategoryChart" class="fixed-dimension-square"></canvas>
         </div>
         <!-- Transactions Over Time Chart -->
         <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
-          <h2 class="text-lg font-semibold mb-4 text-center">Saldo ao Longo do Tempo</h2>
+          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.long_time}">Saldo ao Longo do Tempo</h2>
           <canvas id="transactionsOverTimeChart" class="fixed-dimension-horizontal"></canvas>
         </div>
       </div>
     </section>
 
     <div class="flex flex-row justify-between mb-4 items-center">
-      <h2 class="text-xl font-semibold">Suas Transações</h2>
+      <h2 class="text-xl font-semibold" th:text="#{hello.your_transactions}">Suas Transações</h2>
 
       <select id="accountID" onchange="accountChange();" th:object="${accounts}"
         class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
         required>
-        <option th:value="0" selected>Todas as Contas</option>
+        <option th:value="0" th:text="#{hello.all_accounts}" selected>Todas as Contas</option>
         <option th:each="account : ${accounts}" th:value="${account.id}" th:text="${account.name}">Conta</option>
       </select>
 
       <select id="categoryID" onchange="accountChange();" th:object="${categories}"
         class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
         required>
-        <option th:value="0" selected>Todas as Categorias</option>
-        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoria
+        <option th:value="0" th:text="#{hello.all_categories}" selected>Todas as Categorias</option>
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category
         </option>
       </select>
 
       <a href="/transaction/registration"
-        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150">
+        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{hello.add_new_transaction}">
         Adicionar Nova Transação
       </a>
     </div>
@@ -78,12 +78,12 @@
       <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead>
           <tr class="bg-gray-100 border-b">
-            <th class="py-2 px-4 text-left">Grupo de Transação</th>
-            <th class="py-2 px-4 text-left">Montante</th>
-            <th class="py-2 px-4 text-left">Categoria</th>
-            <th class="py-2 px-4 text-left">Data</th>
-            <th class="py-2 px-4 text-left">Criado em</th>
-            <th class="py-2 px-4 text-left">Ação</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.account}">Grupo de Transação</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.amount}">Montante</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.category}">Categoria</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.date}">Data</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.happenedOn}">Criado em</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.actions}">Ação</th>
           </tr>
         </thead>
         <tbody>
@@ -95,9 +95,9 @@
             <td th:text="${transaction.createdOn}" class="py-2 px-4">Criado em</td>
             <td class="py-2 px-4">
               <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}"
-                class="text-blue-600 hover:underline">Editar</a>
+                class="text-blue-600 hover:underline" th:text="#{hello.table.edit}">Editar</a>
               <a th:href="@{/transaction/delete/{id}(id=${transaction.id})}"
-                class="text-red-600 hover:underline ml-4">Excluir</a>
+                class="text-red-600 hover:underline ml-4" th:text="#{hello.table.delete}">Excluir</a>
             </td>
           </tr>
         </tbody>

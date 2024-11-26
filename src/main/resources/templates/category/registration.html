@@ -14,22 +14,22 @@
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
   <main class="flex-1 flex flex-col justify-center items-center p-6 ml-64">
-    <h1 class="text-2xl font-bold mb-4">Registrar Nova Categoria</h1>
+    <h1 class="text-2xl font-bold mb-4" th:text="#{category.new_category.registration}">Registrar Nova Categoria</h1>
 
     <!-- Form for adding a new category -->
     <form th:action="@{/category/save}" th:object="${category}" method="post"
       class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
       <div>
-        <label for="name" class="block font-medium mb-1">Nome da Categoria:</label>
+        <label for="name" class="block font-medium mb-1" th:text="#{category.new_category.name}">Nome da Categoria:</label>
         <input type="text" id="name" name="name" th:field="*{name}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600"></div>
         <input th:value="${category.user}" th:field="*{user}" hidden>
       </div>
       <div class="flex justify-between items-center mt-4">
-        <a href="/category/list" class="text-blue-600 hover:underline">Voltar para Lista de Categorias</a>
+        <a href="/category/list" class="text-blue-600 hover:underline" th:text="#{category.new_category.return}">Voltar para Lista de Categorias</a>
         <button type="submit"
-          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">
+          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{category.new_category.save}">
           Salvar
         </button>
       </div>

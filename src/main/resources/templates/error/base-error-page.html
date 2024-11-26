@@ -13,13 +13,13 @@
 
   <div class="w-full flex items-center justify-center ml-64">
     <div class="text-center bg-white rounded-xl shadow-lg p-4">
-      <h1 class="text-3xl font-bold mb-4">Bem Vindo(a) a página de erro!!</h1>
+      <h1 class="text-3xl font-bold mb-4" th:text="#{label.welcome.error}">Bem Vindo(a) a página de erro!!</h1>
 
-      <h2 class="text-xl font-medium mb-4">Esta é a página de ERRO do Finance Show!</h2>
+      <h2 class="text-xl font-medium mb-4" th:text="#{label.welcome.error.explanation}">Esta é a página de ERRO do Finance Show!</h2>
 
-      <p class="text-lg">
+      <p class="text-lg" th:text="#{label.click.nothing}">
         Clique
-        <a href="/hello" class="text-blue-600 font-medium hover:underline">
+        <a href="/hello" th:text="#{label.click.here}" class="text-blue-600 font-medium hover:underline">
           aqui
         </a>
         para voltar a página inicial.

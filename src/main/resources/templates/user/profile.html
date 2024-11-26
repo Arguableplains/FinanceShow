@@ -11,32 +11,32 @@
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
   <main class="flex-1 flex flex-col justify-center items-center p-6 ml-64">
-    <h2 class="text-2xl font-bold mb-4">Editar Perfil</h2>
+    <h2 class="text-2xl font-bold mb-4" th:text="#{user.profile.title}">Editar Perfil</h2>
     <form th:action="@{/user/update/{id}(id=${user.id})}" th:method="post" th:object="${user}"
       class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
       <div>
-        <label for="name" class="block font-medium mb-1">Nome:</label>
+        <label for="name" class="block font-medium mb-1" th:text="#{user.profile.field_name}">Nome:</label>
         <input type="text" th:field="*{name}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <p th:each="error: ${#fields.errors('name')}" th:text="${error}" class="mt-1 text-sm text-red-600">Validation
           error</p>
       </div>
       <div>
-        <label for="email" class="block font-medium mb-1">Email:</label>
+        <label for="email" class="block font-medium mb-1" th:text="#{user.profile.field_email}">Email:</label>
         <input type="email" th:field="*{email}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <p th:each="error: ${#fields.errors('email')}" th:text="${error}" class="mt-1 text-sm text-red-600">Validation
           error</p>
       </div>
       <div>
-        <label for="cellphone" class="block font-medium mb-1">Celular:</label>
+        <label for="cellphone" class="block font-medium mb-1" th:text="#{user.profile.field_celphone}">Celular:</label>
         <input type="tel" th:field="*{cellphone}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <p th:each="error : ${#fields.errors('cellphone')}" th:text="${error}" class="mt-1 text-sm text-red-600">
           Validation error</p>
       </div>
       <div>
-        <label for="password" class="block font-medium mb-1">Senha:</label>
+        <label for="password" class="block font-medium mb-1" th:text="#{user.profile.field_password}">Senha:</label>
         <input type="password" th:field="*{password}" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
         <p th:each="error : ${#fields.errors('password')}" th:text="${error}" class="mt-1 text-sm text-red-600">
@@ -57,21 +57,21 @@
           Validation error</p>
       </div>
       <div class="flex justify-between items-center mt-4">
-        <a th:href="@{/hello}" class="text-blue-600 hover:underline">Cancelar</a>
+        <a th:href="@{/hello}" class="text-blue-600 hover:underline" th:text="#{user.profile.cancel}">Cancelar</a>
         <button type="submit"
-          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150">
+          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{user.profile.update}">
           Atualizar
         </button>
       </div>
     </form>
 
     <div class="flex-1 flex flex-col justify-center items-center p-6">
-      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza?');">Deletar Conta</a>
-      <div>
+      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza?');" th:text="#{user.profile.delete}">Deletar Conta</a>
+    <div>
 
-        <div th:if="${successMessage}" role="alert" class="mt-4">
-          <span class="text-green-600">Perfil atualizado com sucesso!</span>
-        </div>
+    <div th:if="${successMessage}" th:text="#{user.profile.success_message}" role="alert" class="mt-4">
+      <span class="text-green-600">Perfil atualizado com sucesso!</span>
+    </div>
   </main>
 
 </body>

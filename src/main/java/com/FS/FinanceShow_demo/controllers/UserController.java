@@ -119,7 +119,13 @@ public class UserController {
     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
     User user = (User) customUserDetails.getUser();
-    userService.delete(user);
+    try{
+      userService.deleteById(user.getId());
+    }
+    catch(Exception e){
+      model.addAttribute("deleteError", "An error occurred during deletion");
+      return "redirect:/user/list";
+    }
 
     SecurityContextHolder.clearContext();
 
@@ -203,7 +209,7 @@ public class UserController {
 
   // Delete user
   @GetMapping("/delete/{id}")
-  public String deleteCategory(@PathVariable("id") Long id, Model model) {
+  public String deleteUser(@PathVariable("id") Long id, Model model) {
       try {
           userService.deleteById(id);
           return "redirect:/user/list";

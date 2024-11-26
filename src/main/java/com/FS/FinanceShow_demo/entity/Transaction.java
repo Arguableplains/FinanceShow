@@ -24,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
+
     public Transaction(double amount, LocalDateTime happenedOn, User user) {
         this.amount = amount;
         this.happenedOn = happenedOn;

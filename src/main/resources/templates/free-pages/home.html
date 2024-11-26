@@ -9,17 +9,23 @@
 <body class="min-h-screen bg-[#D7ECCD] flex flex-col justify-center items-center p-4">
 
   <div class="w-full max-w-md p-6 bg-white rounded-xl shadow-lg text-center">
-    <h1 class="text-3xl font-bold mb-4">Bem Vindo(a)!</h1>
+    <h1 class="text-3xl font-bold mb-4" th:text="#{label.welcome}" >Bem Vindo(a)!</h1>
 
-    <h2 class="text-xl font-medium mb-4">Esta é a página inicial do Finance Show</h2>
+    <h2 class="text-xl font-medium mb-4" th:text="#{label.initial_page}">Esta é a página inicial do Finance Show</h2>
 
-    <p class="text-lg">
-      Clique
-      <a href="/hello" class="text-blue-600 font-medium hover:underline">
-        aqui
-      </a>
-      para prosseguir.
-    </p>
+    <div class="justify-center items-center flex flex-row">
+      <p class="text-lg" th:text="#{label.click}">
+        Clique
+        </p>
+        &nbsp;
+        <a href="/hello" th:text="#{label.click.here}" class="text-blue-600 font-medium hover:underline">
+          aqui
+        </a>
+        &nbsp;
+        <p class="text-lg" th:text="#{label.click.continue}">
+        para prosseguir.
+      </p>
+    <div>
   </div>
 
 </body>

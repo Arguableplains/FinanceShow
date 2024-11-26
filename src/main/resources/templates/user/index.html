@@ -15,7 +15,7 @@
 
   <main class="flex-1 p-6 ml-64">
     <div class="flex flex-row justify-between mb-4 items-center">
-      <h1 class="text-2xl font-bold">Lista de Usuários</h1>
+      <h1 class="text-2xl font-bold" th:text="#{label.admin.user_list}">Lista de Usuários</h1>
     </div>
 
 
@@ -23,12 +23,16 @@
       <table class="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead class="bg-gray-100">
           <tr>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">ID</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Nome</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">E-mail</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Telefone</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Tipo</th>
-            <th class="py-2 px-4 text-left font-medium text-gray-700">Ações</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700" th:text="#{label.admin.user_list.id}">ID</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700" th:text="#{label.admin.user_list.name}">Nome</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700"
+            th:text="#{label.admin.user_list.email}">E-mail</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700"
+            th:text="#{label.admin.user_list.cellphone}">Telefone</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700"
+            th:text="#{label.admin.user_list.roles}">Tipo</th>
+            <th class="py-2 px-4 text-left font-medium text-gray-700"
+            th:text="#{label.admin.user_list.actions}">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -39,9 +43,10 @@
             <td th:text="${user.cellphone}" class="py-2 px-4"></td>
             <td th:text="${#strings.arrayJoin(user?.roles?.![name], ', ')}" class="py-2 px-4"></td>
             <td class="py-2 px-4">
-              <a th:href="@{/user/edit/{id}(id=${user.id})}" class="text-blue-600 hover:underline">Editar</a>
-              <a th:href="@{/user/delete/{id}(id=${user.id})}" class="text-red-600 hover:underline"
-                onclick="return confirm('Você tem certeza que deseja deletar este usuário?');">
+                <a th:href="@{/user/edit/{id}(id=${user.id})}"
+                class="text-blue-600 hover:underline" th:text="#{label.admin.user_list.edit}">Editar</a>
+                <a th:href="@{/user/delete/{id}(id=${user.id})}" class="text-red-600 hover:underline"
+                onclick="return confirm('Você tem certeza que deseja deletar este usuário?');" th:text="#{label.admin.user_list.delete}">
                 Excluir
               </a>
             </td>

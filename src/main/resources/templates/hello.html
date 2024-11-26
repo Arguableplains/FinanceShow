@@ -94,8 +94,8 @@
             <td th:text="${transaction?.account?.name}" class="py-2 px-4">Grupo de Transação</td>
             <td th:text="${transaction.amount}" class="py-2 px-4">Montante</td>
             <td th:text="${transaction?.category?.name}" class="py-2 px-4">Categoria</td>
-            <td th:text="${transaction.happenedOn}" class="py-2 px-4">Data</td>
-            <td th:text="${transaction.createdOn}" class="py-2 px-4">Criado em</td>
+            <td th:text="${#temporals.format(transaction.happenedOn)}" class="py-2 px-4">Data</td>
+            <td th:text="${#temporals.format(transaction.createdOn)}" class="py-2 px-4">Criado em</td>
             <td class="py-2 px-4">
               <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="text-blue-600 hover:underline"
                 th:text="#{hello.table.edit}">Editar</a>

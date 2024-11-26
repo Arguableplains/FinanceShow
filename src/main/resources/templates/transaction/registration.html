@@ -11,7 +11,7 @@
 
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
-  <main class="flex-1 flex flex-col justify-center items-center p-6">
+  <main class="flex-1 flex flex-col justify-center items-center p-6 ml-64">
     <h2 class="text-2xl font-bold mb-4">Registro de Transação</h2>
     <form th:action="@{/transaction/save}" th:method="post" th:object="${transaction}"
       class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
@@ -26,11 +26,11 @@
 
         <div class="flex-col">
           <label th:text="#{label.transaction.account}" class="block font-medium mb-1">Conta</label>
-          <select onchange="accountRegistrationChange(this);" th:field="${transaction.account}" th:object="${accounts}" class="px-4 py-2 ml-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
+          <select onchange="accountRegistrationChange(this);" th:field="${transaction.account}" th:object="${accounts}"
+            class="px-4 py-2 ml-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+            required>
             <option th:value="0" selected>Nenhuma Conta Selecionada</option>
-            <option th:each="account : ${accounts}"
-                    th:value="${account.id}"
-                    th:text="${account.name}">Conta</option>
+            <option th:each="account : ${accounts}" th:value="${account.id}" th:text="${account.name}">Conta</option>
           </select>
           <p th:each="error : ${#fields.errors('account')}" th:text="${error}" class="text-red-600">Validation error</p>
         </div>
@@ -38,22 +38,20 @@
       </div>
       <div class="flex-col">
         <label th:text="#{label.transaction.category}" class="block font-medium mb-1">Categoria</label>
-        <select th:field="*{category}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" required>
+        <select th:field="*{category}"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
+          required>
           <option value="" disabled selected th:text="#{label.select.category}">Categoria</option>
-          <option th:each="category : ${categories}"
-                  th:value="${category.id}"
-                  th:text="${category.name}">Categoria</option>
+          <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoria
+          </option>
         </select>
         <p th:each="error : ${#fields.errors('category')}" th:text="${error}" class="text-red-600">Validation error</p>
         <div th:if="${noCategoriesFound}" role="alert">
-          <span
-              th:text="${noCategoriesFound}"
-              class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"
-          ></span>
-          <a
-            class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" href="/category/registration"
-          >
-              Adicionar Nova Categoria
+          <span th:text="${noCategoriesFound}"
+            class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150"></span>
+          <a class="block py-2 px-4 mt-4 bg-[#A5E885] rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+            href="/category/registration">
+            Adicionar Nova Categoria
           </a>
         </div>
       </div>

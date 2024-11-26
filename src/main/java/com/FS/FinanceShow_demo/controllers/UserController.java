@@ -53,7 +53,7 @@ public class UserController {
   // Creating User
   @GetMapping("/registration")
   public String showRegistrationForm(Model model) {
-
+      
     model.addAttribute("user", new User());
     return "/user/registration";
   }
@@ -204,7 +204,7 @@ public class UserController {
 
       model.addAttribute("user", user);
       model.addAttribute("allRoles", roleService.findAll());
-      return "/user/profile";
+      return "/user/edit";
   }
 
   // Delete user

@@ -28,12 +28,12 @@ public class Transaction {
     public Transaction(double amount, LocalDateTime happenedOn, User user) {
         this.amount = amount;
         this.happenedOn = happenedOn;
-        this.createdOn = Instant.now();
+        this.createdOn = LocalDateTime.now();
         this.user = user;
     }
 
     public Transaction() {
-        this.createdOn = Instant.now(); 
+        this.createdOn = LocalDateTime.now(); 
     }
     
     @Id
@@ -56,7 +56,8 @@ public class Transaction {
     private LocalDateTime happenedOn;
 
     @Column(name = "CREATED_ON", nullable = false)
-    private Instant createdOn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdOn;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -117,7 +118,7 @@ public class Transaction {
         this.happenedOn = happenedOn;
     }
     
-    public Instant getCreatedOn() {
+    public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 }

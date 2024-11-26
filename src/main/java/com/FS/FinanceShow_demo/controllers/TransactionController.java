@@ -177,6 +177,12 @@ public class TransactionController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedHappenedOn = transaction.getHappenedOn().format(formatter);
         List<Category> categories = categoryService.findByUserId(((User)customUserDetails.getUser()).getId());
+        
+        // Get User's Accounts
+        List<Account> accounts = accountService.findByUserId(customUserDetails.getId());
+
+        // Passing Values to the view
+        model.addAttribute("accounts", accounts);
 
         if(categories.isEmpty()){
             model.addAttribute("noCategoriesFound", "Você ainda não tem categorias registradas!!! Você deveria registrar categorias para que as suas transações fiquem melhor organizadas!");

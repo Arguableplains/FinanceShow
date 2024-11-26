@@ -10,7 +10,7 @@
 
   <div th:insert="fragments/sidebar :: sidebarFragment"></div>
 
-  <main class="flex-1 flex flex-col justify-center items-center p-6 ml-64">
+  <main class="flex-1 flex flex-col justify-center items-center p-4 ml-64">
     <h2 class="text-2xl font-bold mb-4" th:text="#{user.profile.title}">Editar Perfil</h2>
     <form th:action="@{/user/update/{id}(id=${user.id})}" th:method="post" th:object="${user}"
       class="space-y-6 max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
@@ -59,15 +59,21 @@
       <div class="flex justify-between items-center mt-4">
         <a th:href="@{/hello}" class="text-blue-600 hover:underline" th:text="#{user.profile.cancel}">Cancelar</a>
         <button type="submit"
-          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{user.profile.update}">
+          class="py-2 px-4 bg-[#A5E885] border border-gray-600 rounded-lg text-black font-medium hover:bg-[#218838] hover:text-white transition duration-150"
+          th:text="#{user.profile.update}">
           Atualizar
         </button>
       </div>
+
+      <div class="flex-1 flex flex-col justify-center items-center">
+        <a href="/user/delete" class="text-red-500"
+          onclick="return confirm('Ao deletar a conta, seus dados não poderão ser recuperados. Você tem certeza?');"
+          th:text="#{user.profile.delete}">Deletar Conta
+        </a>
+      </div>
     </form>
 
-    <div class="flex-1 flex flex-col justify-center items-center p-6">
-      <a href="/user/delete" class="text-red-500" onclick="return confirm('Você tem certeza?');" th:text="#{user.profile.delete}">Deletar Conta</a>
-    <div>
+
 
     <div th:if="${successMessage}" th:text="#{user.profile.success_message}" role="alert" class="mt-4">
       <span class="text-green-600">Perfil atualizado com sucesso!</span>

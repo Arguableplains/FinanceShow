@@ -39,12 +39,14 @@
       <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6 justify-center mx-auto">
         <!-- Expenses by Category Chart -->
         <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
-          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.category_expenses}">Despesas por Categoria</h2>
+          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.category_expenses}">Despesas por
+            Categoria</h2>
           <canvas id="expensesByCategoryChart" class="fixed-dimension-square"></canvas>
         </div>
         <!-- Transactions Over Time Chart -->
         <div class="chart-container bg-white p-6 pb-12 rounded shadow flex-none">
-          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.long_time}">Saldo ao Longo do Tempo</h2>
+          <h2 class="text-lg font-semibold mb-4 text-center" th:text="#{hello.charts.long_time}">Transações ao Longo do
+            Tempo</h2>
           <canvas id="transactionsOverTimeChart" class="fixed-dimension-horizontal"></canvas>
         </div>
       </div>
@@ -69,7 +71,8 @@
       </select>
 
       <a href="/transaction/registration"
-        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150" th:text="#{hello.add_new_transaction}">
+        class="inline-block py-2 px-4 bg-[#A5E885] text-black font-medium border border-gray-600 rounded-lg hover:bg-[#218838] hover:text-white transition duration-150"
+        th:text="#{hello.add_new_transaction}">
         Adicionar Nova Transação
       </a>
     </div>
@@ -94,10 +97,10 @@
             <td th:text="${transaction.happenedOn}" class="py-2 px-4">Data</td>
             <td th:text="${transaction.createdOn}" class="py-2 px-4">Criado em</td>
             <td class="py-2 px-4">
-              <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}"
-                class="text-blue-600 hover:underline" th:text="#{hello.table.edit}">Editar</a>
-              <a th:href="@{/transaction/delete/{id}(id=${transaction.id})}"
-                class="text-red-600 hover:underline ml-4" th:text="#{hello.table.delete}">Excluir</a>
+              <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="text-blue-600 hover:underline"
+                th:text="#{hello.table.edit}">Editar</a>
+              <a th:href="@{/transaction/delete/{id}(id=${transaction.id})}" class="text-red-600 hover:underline ml-4"
+                th:text="#{hello.table.delete}">Excluir</a>
             </td>
           </tr>
         </tbody>

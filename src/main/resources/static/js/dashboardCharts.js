@@ -5,8 +5,6 @@ var expensesByCategory, transactionsOverTime;
 try {
     expensesByCategory = JSON.parse(expensesByCategoryData);
     transactionsOverTime = JSON.parse(transactionsOverTimeData);
-    console.log("Expenses by Category Data:", expensesByCategory);
-    console.log("Transactions Over Time Data:", transactionsOverTime);
 } catch (error) {
     console.error("Error parsing JSON data:", error);
 }
@@ -33,9 +31,6 @@ function formatTimestampToDate(timestamp) {
         categoryLabels.push(categoryName);
         categoryAmounts.push(sumAmount);
     });
-
-    console.log("Category Labels:", categoryLabels);
-    console.log("Category Amounts:", categoryAmounts);
 
     var ctx = document.getElementById('expensesByCategoryChart').getContext('2d');
     var expensesByCategoryChart = new Chart(ctx, {
@@ -82,13 +77,10 @@ function formatTimestampToDate(timestamp) {
         var timestamp = item[0];
         var date = formatTimestampToDate(timestamp);
         var sumAmount = item[1];
-        console.log("Transaction Date:", date, "Amount:", sumAmount);
+
         timeLabels.push(date);
         timeAmounts.push(sumAmount);
     });
-
-    console.log("Time Labels:", timeLabels);
-    console.log("Time Amounts:", timeAmounts);
 
     var ctx2 = document.getElementById('transactionsOverTimeChart').getContext('2d');
     var transactionsOverTimeChart = new Chart(ctx2, {

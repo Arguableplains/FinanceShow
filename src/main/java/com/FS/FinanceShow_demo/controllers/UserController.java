@@ -80,9 +80,9 @@ public class UserController {
 
       // Basic Categories For user
       Category[] defaultCategories = {
-          new Category("Food/Drinks", user),
-          new Category("Entertainment", user),
-          new Category("Health", user)
+          new Category("Comes e Bebes", user),
+          new Category("Entretenimento", user),
+          new Category("Saúde", user)
       };
 
       // Save categories

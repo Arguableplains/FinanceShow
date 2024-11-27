@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
+import java.time.LocalDateTime;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -66,7 +67,6 @@ public class TransactionController {
                 }
             }
         }
-
 
         model.addAttribute("transaction", transaction);
 
@@ -170,11 +170,19 @@ public class TransactionController {
         @PathVariable("id") Long id, 
         Model model,
         @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        
+        
+        
         Transaction transaction = transactionService.findById(id);
         if (transaction == null) {
             model.addAttribute("error", "Transaction not found");
             return "redirect:/hello";
         }
+        User currentUser = (User) customUserDetails.getUser();
+        if (!transaction.getUser().getId().equals(currentUser.getId())) {
+            return "redirect:hello";
+        }
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedHappenedOn = transaction.getHappenedOn().format(formatter);
         List<Category> categories = categoryService.findByUserId(((User)customUserDetails.getUser()).getId());

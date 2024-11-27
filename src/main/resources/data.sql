@@ -23,7 +23,8 @@ VALUES
 ('Test', 'a@a', '$2a$12$hECHkvkdwCElCi0DUOZz4Ofgpke2E6ssE8o3YlWYug5vBmuksfxvW', '999999994', 'admin_pic'),
 ('Alice', 'alice@test.com', '$2b$12$ieYk9tpZA45fd/tnosOeZ.t3zkVkNrXwm2ehNyr6QU0Afck73J9Sy', '999999995', 'alice_pic'),
 ('Bob', 'bob@test.com', '$2b$12$rkB7qfO63uWwJ9KDccT/puXNtQtrT62sXirzJNNkTi1TruRr0NaPW', '999999997', 'bob_pic'),
-('Charlie', 'charlie@test.com', '$2b$12$WQozj3UXgRfkxX2yup2pBO4Qgl2Dx.IUm852r11H/JxmZuw9a64da', '999999996', 'charlie_pic');
+('Charlie', 'charlie@test.com', '$2b$12$WQozj3UXgRfkxX2yup2pBO4Qgl2Dx.IUm852r11H/JxmZuw9a64da', '999999996', 'charlie_pic'),
+('John Doe', 'john@doe.com', '$2b$12$WQozj3UXgRfkxX2yup2pBO4Qgl2Dx.IUm852r11H/JxmZuw9a64da', '11997789485','john_pic');
 -- admin_password, 1, alice_password, bob_password, charlie_password
 
 -- Roles
@@ -67,7 +68,13 @@ VALUES
 ('Utilities', (SELECT id FROM users WHERE email = 'bob@test.com')),
 ('Groceries', (SELECT id FROM users WHERE email = 'charlie@test.com')),
 ('Entertainment', (SELECT id FROM users WHERE email = 'charlie@test.com')),
-('Utilities', (SELECT id FROM users WHERE email = 'charlie@test.com'));
+('Utilities', (SELECT id FROM users WHERE email = 'charlie@test.com')),
+('Tecnologia', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Educacao', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Financas', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Saude', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Entretenimento', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Esportes', (SELECT id FROM users WHERE email = 'john@doe.com'));
 
 -- Accounts
 INSERT INTO account (NAME, USER_FOREING_KEY)
@@ -76,7 +83,11 @@ VALUES
 ('Test Checking', (SELECT id FROM users WHERE email = 'a@a')),
 ('Alice Checking', (SELECT id FROM users WHERE email = 'alice@test.com')),
 ('Bob Checking', (SELECT id FROM users WHERE email = 'bob@test.com')),
-('Charlie Checking', (SELECT id FROM users WHERE email = 'charlie@test.com'));
+('Charlie Checking', (SELECT id FROM users WHERE email = 'charlie@test.com')),
+('Conta Banco', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Carteira', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Poupanca', (SELECT id FROM users WHERE email = 'john@doe.com')),
+('Cartao de Credito', (SELECT id FROM users WHERE email = 'john@doe.com'));
 
 -- Transactions for admin@admin.com
 INSERT INTO transactions (AMOUNT, HAPPENED_ON, CREATED_ON, USER_ID, CATEGORY_ID, ACCOUNT_ID)
@@ -117,3 +128,30 @@ VALUES
  (SELECT id FROM users WHERE email = 'a@a'),
  (SELECT id FROM category WHERE NAME = 'Groceries' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'a@a')),
  (SELECT id FROM account WHERE NAME = 'Test Checking'));
+
+-- Transactions for john doe
+INSERT INTO transactions (AMOUNT, HAPPENED_ON, CREATED_ON, USER_ID, CATEGORY_ID, ACCOUNT_ID, DESCRIPTION)
+VALUES
+(392.69, '2024-11-18T01:25', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Financas' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Conta Banco'), 'Pagamento de transporte'),
+(-831.73, '2024-11-16T14:10', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Educacao' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Consulta odontologica'),
+(-442.00, '2024-11-27T14:11', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Financas' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Investimento em acoes'),
+(-887.80, '2024-11-12T13:16', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Esportes' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Consulta medica'),
+(668.33, '2024-11-25T12:37', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Pagamento de mensalidade'),
+(146.22, '2024-11-07T11:35', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Saude' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Compra de eletronicos'),
+(188.46, '2024-11-02T11:44', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Compra de eletronicos'),
+(-753.84, '2024-11-14T19:24', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Entretenimento' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Investimento em acoes'),
+(-264.41, '2024-11-05T04:17', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Gastos com academia'),
+(-380.51, '2024-11-03T01:04', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Educacao' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Curso online'),
+(-459.78, '2024-11-06T20:52', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Financas' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Compra de medicamentos'),
+(-733.91, '2024-11-20T21:55', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Compra de presentes'),
+(-730.36, '2024-11-13T16:51', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Educacao' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Viagem de fim de semana'),
+(-678.29, '2024-11-09T09:36', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Financas' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Compra de roupas'),
+(-273.12, '2024-11-15T16:03', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Entretenimento' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Poupanca'), 'Compra de materiais esportivos'),
+(907.27, '2024-11-29T12:00', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Financas' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Compra de presentes'),
+(-592.74, '2024-11-11T06:13', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Esportes' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Conta Banco'), 'Investimento em acoes'),
+(944.21, '2024-11-21T16:42', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Esportes' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Pagamento de mensalidade'),
+(491.02, '2024-11-13T00:05', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Cafe com amigos'),
+(-326.55, '2024-11-21T04:04', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Pagamento de transporte'),
+(-523.36, '2024-11-05T07:11', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Entretenimento' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Carteira'), 'Compra de materiais esportivos'),
+(607.03, '2024-11-03T19:33', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Tecnologia' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Cartao de Credito'), 'Transferencia bancaria'),
+(671.40, '2024-11-10T21:55', CURRENT_TIMESTAMP, (SELECT id FROM users WHERE email = 'john@doe.com'), (SELECT id FROM category WHERE NAME = 'Esportes' AND USER_FOREING_KEY = (SELECT id FROM users WHERE email = 'john@doe.com')), (SELECT id FROM account WHERE NAME = 'Conta Banco'), 'Consulta odontologica');

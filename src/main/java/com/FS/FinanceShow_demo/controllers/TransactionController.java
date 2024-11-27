@@ -94,6 +94,7 @@ public class TransactionController {
             @RequestParam("category") Long categoryId,
             @RequestParam("account") Long accountId,
             @RequestParam(value = "isIncome", required = false) Boolean isIncome,
+            @RequestParam("description") String description,
             BindingResult bindingResult,
             Model model,
             @AuthenticationPrincipal CustomUserDetails customUserDetails,

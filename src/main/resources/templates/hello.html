@@ -86,6 +86,7 @@
             <th class="py-2 px-4 text-left" th:text="#{hello.table.category}">Categoria</th>
             <th class="py-2 px-4 text-left" th:text="#{hello.table.date}">Data</th>
             <th class="py-2 px-4 text-left" th:text="#{hello.table.happenedOn}">Criado em</th>
+            <th class="py-2 px-4 text-left" th:text="#{hello.table.description}">Descrição</th>
             <th class="py-2 px-4 text-left" th:text="#{hello.table.actions}">Ação</th>
           </tr>
         </thead>
@@ -96,6 +97,7 @@
             <td th:text="${transaction?.category?.name}" class="py-2 px-4">Categoria</td>
             <td th:text="${#temporals.format(transaction.happenedOn)}" class="py-2 px-4">Data</td>
             <td th:text="${#temporals.format(transaction.createdOn)}" class="py-2 px-4">Criado em</td>
+            <td th:text="${transaction.description}" class="py-2 px-4">Descrição</td>
             <td class="py-2 px-4">
               <a th:href="@{/transaction/edit/{id}(id=${transaction.id})}" class="text-blue-600 hover:underline"
                 th:text="#{hello.table.edit}">Editar</a>

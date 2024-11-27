@@ -74,6 +74,16 @@
         <p th:each="error : ${#fields.errors('happenedOn')}" th:text="${error}" class="text-red-600">Erro de validação
         </p>
       </div>
+        
+        <div class="flex-col">
+        <label th:text="#{label.transaction.description}" class="block font-medium mb-1">Descrição</label>
+        <div class="flex items-center">
+          <input th:field="*{description}" required
+            class="w-full px-4 py-2 mr-1 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#218838] focus:border-[#218838] outline-none transition duration-150" />
+          
+        <p th:each="error : ${#fields.errors('description')}" th:text="${error}" class="text-red-600">Erro de validação</p>
+      </div>
+        
       <div class="flex justify-between items-center mt-4">
         <a th:href="@{/hello}" th:text="#{label.transaction.cancel}" class="text-blue-600 hover:underline">Cancelar</a>
         <button type="submit" th:text="#{label.form.submit}"
@@ -81,6 +91,8 @@
           Enviar
         </button>
       </div>
+        
+        
     </form>
 
     <div th:if="${registrationError}" class="mt-4 text-red-600">
